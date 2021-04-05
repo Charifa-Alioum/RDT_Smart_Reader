@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="cm.seeds.rdtsmartreader.ui.main.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_informations"
+        android:name="cm.seeds.rdtsmartreader.ui.main.informations.InformationsFragment"
+        android:label="@string/informations"
+        tools:layout="@layout/fragment_informations" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="cm.seeds.rdtsmartreader.ui.main.settings.SettingsFragment"
+        android:label="@string/parametres"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="cm.seeds.rdtsmartreader.ui.main.capture.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
+
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="cm.seeds.rdtsmartreader.ui.main.scan.ScanFragment"
+        android:label="fragment_scan"
+        tools:layout="@layout/fragment_scan" />
+
+
+</navigation>

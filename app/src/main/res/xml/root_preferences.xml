@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory app:title="Configurations générales">
+
+        <SwitchPreferenceCompat
+            app:key="@string/localisation_preference_key"
+            app:title="Found location automatically"
+            android:summaryOff="Vous devrez fournir la localisation vous même"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

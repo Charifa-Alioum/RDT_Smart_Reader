@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.main.capture.CameraFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="?android:attr/colorBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/semi_fab_margin"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_round_arrow_back_24"
+                    android:padding="@dimen/semi_fab_margin"
+                    android:background="@drawable/button_round_background"
+                    android:tint="?android:attr/colorForeground"/>
+
+                <TextView
+                    android:id="@+id/page_label"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:layout_marginStart="@dimen/semi_fab_margin"
+                    android:text="Image_22255_54545454554"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/button_analyse_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Analyser"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_marginStart="@dimen/fab_margin"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageView
+            android:id="@+id/imageView_preview"
+            android:layout_width="wrap_content"
+            android:scaleType="centerCrop"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/appbar_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_edit_current_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_round_edit_24"
+            android:layout_margin="@dimen/fab_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_capture_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/fab_edit_current_image"
+            app:layout_constraintStart_toStartOf="@id/fab_edit_current_image"
+            app:layout_constraintBottom_toTopOf="@id/fab_edit_current_image"
+            android:src="@drawable/ic_round_photo_camera_24"
+            android:layout_marginBottom="@dimen/semi_fab_margin"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_capture_choose_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/fab_edit_current_image"
+            app:layout_constraintStart_toStartOf="@id/fab_edit_current_image"
+            app:layout_constraintBottom_toTopOf="@id/fab_capture_image"
+            android:src="@drawable/ic_round_image_24"
+            android:layout_marginBottom="@dimen/semi_fab_margin"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

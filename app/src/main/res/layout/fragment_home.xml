@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.home.HomeFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/layout_all_test"
+                        android:layout_width="match_parent"
+                        app:cardCornerRadius="@dimen/fab_margin"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#7CB342"
+                        app:layout_constraintTop_toBottomOf="@id/recyclerview_otifications"
+                        android:layout_marginStart="@dimen/fab_margin"
+                        android:layout_marginEnd="@dimen/fab_margin"
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:layout_marginBottom="@dimen/quater_fab_margin">
+
+                        <TextView
+                            android:id="@+id/textview_nombre_test"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="20 \n Testés"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:padding="@dimen/fab_margin"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/layout_all_test">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/layout_postive_tests"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="@dimen/fab_margin"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="#00897B"
+                            android:layout_marginStart="@dimen/fab_margin"
+                            android:layout_marginTop="@dimen/quater_fab_margin"
+                            android:layout_marginBottom="@dimen/semi_fab_margin">
+
+                            <TextView
+                                android:id="@+id/textview_nombre_test_positifs"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="05 \n Positifs"
+                                android:gravity="center"
+                                android:padding="@dimen/fab_margin"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/layout_negative_result"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="@dimen/fab_margin"
+                            app:cardBackgroundColor="#E53935"
+                            android:layout_marginTop="@dimen/quater_fab_margin"
+                            android:layout_marginEnd="@dimen/fab_margin"
+                            android:layout_marginBottom="@dimen/semi_fab_margin"
+                            android:layout_marginStart="@dimen/semi_fab_margin">
+
+                            <TextView
+                                android:id="@+id/textview_nombre_test_negatifs"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="15 \n Négatifs"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/fab_margin"
+                                android:textStyle="bold"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Effacer"
+                    android:visibility="gone"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="?android:attr/colorForeground"
+                    android:layout_gravity="end"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+                <LinearLayout
+                    android:id="@+id/recyclerview_otifications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/fab_margin"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <include layout="@layout/item_notification_in_home"/>
+
+                    <include layout="@layout/item_notification_in_home"/>
+
+                    <include layout="@layout/item_notification_in_home"/>
+
+                    <include layout="@layout/item_notification_in_home"/>
+
+                    <include layout="@layout/item_notification_in_home"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/layout_not_sync_informations"
+                    android:layout_width="match_parent"
+                    app:cardCornerRadius="@dimen/fab_margin"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/layout_postive_tests"
+                    android:layout_margin="@dimen/fab_margin">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textview_nombre_not_sync"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Il existe des informations non synchronisées"
+                            android:padding="@dimen/fab_margin"
+                            android:textStyle="italic"
+                            app:layout_constraintEnd_toStartOf="@id/text_numbers_item_not_sync"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/text_numbers_item_not_sync"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25"
+                            android:textColor="#E53935"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                            app:layout_constraintEnd_toEndOf="@id/button_sync"
+                            android:layout_marginTop="@dimen/fab_margin"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/button_sync"
+                            app:layout_constraintBottom_toTopOf="@id/button_sync" />
+
+                        <ImageButton
+                            android:id="@+id/button_sync"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_round_sync_24"
+                            android:tint="#1E88E5"
+                            android:padding="@dimen/semi_fab_margin"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:background="@drawable/button_round_background"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_more_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_round_add_24"
+            android:layout_margin="@dimen/fab_margin"
+            app:borderWidth="0dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:visibility="gone"
+            android:src="@drawable/ic_round_qr_code_scanner_24"
+            app:layout_constraintEnd_toEndOf="@id/button_more_action"
+            app:layout_constraintStart_toStartOf="@id/button_more_action"
+            app:layout_constraintBottom_toTopOf="@id/button_more_action"
+            android:layout_margin="@dimen/semi_fab_margin"
+            app:borderWidth="0dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_capture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:visibility="gone"
+            android:src="@drawable/ic_round_photo_camera_24"
+            app:layout_constraintEnd_toEndOf="@id/button_more_action"
+            app:layout_constraintStart_toStartOf="@id/button_more_action"
+            app:layout_constraintBottom_toTopOf="@id/button_scan"
+            android:layout_margin="@dimen/semi_fab_margin"
+            app:borderWidth="0dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Que faire de ce code scanné"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:gravity="center"
+            android:padding="@dimen/fab_margin"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:alpha=".4"
+            android:background="?android:attr/colorForeground"/>
+
+        <LinearLayout
+            android:id="@+id/layout_actions_map_user_to_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/semi_fab_margin">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_round_person_24"
+                android:alpha=".7"
+                app:tint="?android:attr/colorForeground"
+                android:layout_margin="@dimen/semi_fab_margin"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Associer ce code à un patient"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:padding="@dimen/semi_fab_margin"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:alpha=".4"
+            android:background="?android:attr/colorForeground"/>
+
+        <LinearLayout
+            android:id="@+id/layout_actions_create_user_with_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/semi_fab_margin">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha=".7"
+                android:src="@drawable/ic_round_person_add_alt_1_24"
+                app:tint="?android:attr/colorForeground"
+                android:layout_margin="@dimen/semi_fab_margin"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Créer un patient avec ce code"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:padding="@dimen/semi_fab_margin"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,1115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="userToSave"
+            type="cm.seeds.rdtsmartreader.modeles.User" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/back_overlay"
+            tools:context=".FragmentSendAirtimzBottomSheet">
+
+            <RelativeLayout
+                android:id="@+id/relative_cover"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:fitsSystemWindows="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_round_people_alt_24" />
+
+                <View
+                    android:id="@+id/view_color_overlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha=".6"
+                    android:background="@color/color_primary" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/fab_margin"
+                android:paddingLeft="@dimen/fab_margin"
+                android:paddingTop="24dp"
+                android:paddingRight="@dimen/fab_margin">
+
+                <LinearLayout
+                    android:id="@+id/cardView_total_transactions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/page_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="3dp"
+                        android:text="@string/informations_personnelles"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/page_details"
+                        style="@style/TextAppearance.MaterialComponents.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/details_infos_personnelles"
+                        android:textColor="#fff" />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:animateLayoutChanges="true"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_info_personnelles"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_margin="@dimen/quater_fab_margin"
+                        app:cardPreventCornerOverlap="false"
+                        app:cardCornerRadius="@dimen/semi_fab_margin">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/fab_margin"
+                            android:paddingTop="@dimen/fab_margin"
+                            android:paddingRight="@dimen/fab_margin"
+                            android:paddingBottom="@dimen/fab_margin"
+                            android:animateLayoutChanges="true">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginTop="@dimen/quater_fab_margin"
+                                    android:layout_marginBottom="@dimen/quater_fab_margin"
+                                    android:hint="@string/identifiants"
+                                    app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Caption">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edittext_identifiants"
+                                        android:layout_width="match_parent"
+                                        android:inputType="textPersonName"
+                                        android:layout_height="wrap_content"
+                                        android:lines="1"
+                                        android:text="@{userToSave.userId}"
+                                        android:imeOptions="actionNext"
+                                        android:selectAllOnFocus="true" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <ImageButton
+                                    android:id="@+id/button_scan_code"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_round_qr_code_scanner_24"
+                                    android:tint="@color/color_accent"
+                                    android:background="@drawable/button_round_background"
+                                    android:padding="@dimen/semi_fab_margin"
+                                    android:layout_margin="@dimen/quater_fab_margin"/>
+
+                            </LinearLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:hint="@string/noms_et_prenoms">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edittext_nom_client"
+                                    android:layout_width="match_parent"
+                                    android:inputType="textPersonName"
+                                    android:layout_height="wrap_content"
+                                    android:lines="1"
+                                    android:text="@{userToSave.userName}"
+                                    android:imeOptions="actionNext"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:hint="@string/profession">
+
+                                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                    android:id="@+id/profession_patient"
+                                    android:layout_width="match_parent"
+                                    android:inputType="textPersonName"
+                                    android:layout_height="wrap_content"
+                                    android:lines="1"
+                                    android:text="@{userToSave.profession}"
+                                    android:imeOptions="actionNext"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                android:layout_width="match_parent"
+                                app:counterMaxLength="25"
+                                android:layout_marginEnd="@dimen/quater_fab_margin"
+                                android:layout_weight="3"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/domicile">
+
+                                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                    android:id="@+id/edittext_domile_patient"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName"
+                                    android:lines="1"
+                                    android:text="@{userToSave.userDomicile}"
+                                    android:imeOptions="actionNext"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/semi_fab_margin"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:hint="@string/region">
+
+                                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                    android:id="@+id/region_patient"
+                                    android:layout_width="match_parent"
+                                    android:inputType="textPersonName"
+                                    android:layout_height="wrap_content"
+                                    android:lines="1"
+                                    android:text="@{userToSave.region}"
+                                    android:imeOptions="actionNext"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/quater_fab_margin"
+                                    android:layout_marginBottom="@dimen/quater_fab_margin"
+                                    android:hint="@string/district">
+
+                                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                        android:id="@+id/district_patient"
+                                        android:layout_width="match_parent"
+                                        android:inputType="textPersonName"
+                                        android:layout_height="wrap_content"
+                                        android:lines="1"
+                                        android:text="@{userToSave.district}"
+                                        android:imeOptions="actionNext"
+                                        android:selectAllOnFocus="true" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/quater_fab_margin"
+                                    android:layout_marginStart="@dimen/semi_fab_margin"
+                                    android:layout_marginBottom="@dimen/quater_fab_margin"
+                                    android:hint="@string/aire_de_sante">
+
+                                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                        android:id="@+id/aire_sante_patient"
+                                        android:layout_width="match_parent"
+                                        android:inputType="textPersonName"
+                                        android:layout_height="wrap_content"
+                                        android:lines="1"
+                                        android:text="@{userToSave.aireDeSante}"
+                                        android:imeOptions="actionNext"
+                                        android:selectAllOnFocus="true" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </LinearLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:hint="@string/telephone">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edittext_telephone_patient"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="number"
+                                    android:text="@{userToSave.telephone}"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:hint="@string/genre">
+
+                                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                    android:id="@+id/edittext_genre_patient"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="text"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="@dimen/quater_fab_margin"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/age">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edittext_age_patient"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:imeOptions="actionNext"
+                                        android:lines="1"
+                                        android:text="@{String.valueOf(userToSave.userAge)}"
+                                        android:inputType="number"
+                                        android:selectAllOnFocus="true" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_age_mois"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/mois"
+                                        android:layout_marginStart="@dimen/quater_fab_margin"
+                                        android:layout_marginEnd="@dimen/quater_fab_margin"/>
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_age_annee"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/annee"
+                                        android:checked="true"
+                                        android:layout_marginStart="@dimen/quater_fab_margin"
+                                        android:layout_marginEnd="@dimen/quater_fab_margin"/>
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:animateLayoutChanges="true"
+                                android:gravity="center_vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="@integer/radio_label_weight"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/professionnel_de_la_sante"
+                                        android:layout_marginEnd="@dimen/fab_margin"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                    <RadioGroup
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginStart="@dimen/fab_margin">
+
+                                        <com.google.android.material.radiobutton.MaterialRadioButton
+                                            android:id="@+id/radiobutton_professionnel_sante_oui"
+                                            android:layout_width="wrap_content"
+                                            android:layout_marginStart="@dimen/semi_fab_margin"
+                                            android:layout_marginEnd="@dimen/semi_fab_margin"
+                                            android:checked="@{userToSave.doctor}"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/oui"/>
+
+                                        <com.google.android.material.radiobutton.MaterialRadioButton
+                                            android:id="@+id/radiobutton_professionnel_sante_non"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:checked="@{!userToSave.doctor}"
+                                            android:text="@string/non"/>
+
+                                    </RadioGroup>
+
+                                </LinearLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/layout_professionnel_dante"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                    android:layout_width="match_parent"
+                                    android:visibility="gone"
+                                    android:layout_marginStart="@dimen/quater_fab_margin"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/poste">
+
+                                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                        android:id="@+id/edittext_professionnel_sante"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:imeOptions="actionNext"
+                                        android:lines="1"
+                                        android:text="@{String.valueOf(userToSave.professionPersonnelSante)}"
+                                        android:inputType="text"
+                                        android:selectAllOnFocus="true" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="@integer/radio_label_weight"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/statut_du_cas"
+                                    android:layout_marginEnd="@dimen/fab_margin"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginStart="@dimen/fab_margin">
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_status_case_vivant"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"
+                                        android:checked="@{userToSave.alive}"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/vivant"/>
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_status_case_mort"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:checked="@{!userToSave.alive}"
+                                        android:text="@string/decede"/>
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_date_deces"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="visible"
+                                    android:layout_marginTop="@dimen/quater_fab_margin"
+                                    android:layout_marginBottom="@dimen/quater_fab_margin"
+                                    android:hint="@string/date_deces">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/date_deces_patient"
+                                        android:layout_width="match_parent"
+                                        android:enabled="false"
+                                        android:editable="false"
+                                        android:focusable="false"
+                                        android:layout_height="wrap_content"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="date"
+                                        android:selectAllOnFocus="true" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <ImageButton
+                                    android:id="@+id/button_date_deces"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_round_calendar_today_24"
+                                    android:tint="@color/color_accent"
+                                    android:padding="@dimen/semi_fab_margin"
+                                    android:background="@drawable/button_round_background"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_infos_symptomes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:animateLayoutChanges="true"
+                        app:cardCornerRadius="@dimen/semi_fab_margin">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:animateLayoutChanges="true"
+                            android:padding="@dimen/fab_margin">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="@integer/radio_label_weight"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/asymptomatique"
+                                    android:layout_marginEnd="@dimen/fab_margin"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginStart="@dimen/fab_margin">
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_asymptomatique_oui"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:checked="true"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/oui"/>
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_asymptomatique_non"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:text="@string/non"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_all_symptome"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="visible"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="visible"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:visibility="visible"
+                                        android:layout_marginTop="@dimen/quater_fab_margin"
+                                        android:layout_marginBottom="@dimen/quater_fab_margin"
+                                        android:hint="@string/date_debut_symptome">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/date_debut_symptome_patient"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:enabled="false"
+                                            android:focusable="false"
+                                            android:editable="false"
+                                            android:imeOptions="actionDone"
+                                            android:inputType="date"
+                                            android:selectAllOnFocus="true" />
+
+                                    </com.google.android.material.textfield.TextInputLayout>
+
+                                    <ImageButton
+                                        android:id="@+id/button_date_debut_symptome"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:src="@drawable/ic_round_calendar_today_24"
+                                        android:tint="@color/color_accent"
+                                        android:padding="@dimen/semi_fab_margin"
+                                        android:background="@drawable/button_round_background"/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_infos_examen"
+                        android:visibility="gone"
+                        android:animateLayoutChanges="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingStart="@dimen/fab_margin"
+                            android:paddingEnd="@dimen/fab_margin"
+                            android:paddingTop="@dimen/semi_fab_margin"
+                            android:animateLayoutChanges="true"
+                            android:paddingBottom="@dimen/semi_fab_margin">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="@integer/radio_label_weight"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/nature_du_test"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginStart="@dimen/semi_fab_margin">
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_nature_test_covid_ac"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:layout_height="wrap_content"
+                                        android:text="COVID19 Ac"/>
+
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_nature_test_covid_ag"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:text="COVID 19 Ag"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="@integer/radio_label_weight"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/type_de_prelevement"
+                                    android:layout_marginTop="@dimen/fab_margin"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="@dimen/semi_fab_margin">
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_type_prelevement_nasopharynge"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:layout_height="wrap_content"
+                                        android:checked="true"
+                                        android:text="@string/nasopharynge"/>
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_type_prelevement_autre"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/autres"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layout_autre_type_prelevement"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:hint="@string/autre_nature_prelevement">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edittext_autres_type_prelevement"
+                                    android:layout_width="match_parent"
+                                    android:inputType="text"
+                                    android:layout_height="wrap_content"
+                                    android:lines="1"
+                                    android:imeOptions="actionNext"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="@dimen/fab_margin">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="@integer/radio_label_weight"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/indications_du_prelevement"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="@dimen/semi_fab_margin">
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_indications_test_volontaire"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:layout_height="wrap_content"
+                                        android:checked="true"
+                                        android:text="@string/volontaire"/>
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_indications_test_controle"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:text="@string/controle"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_indications_test_autre"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:text="@string/autres"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layout_autre_indications_prelevement"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:hint="@string/autre_indication_prelevement">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edittext_autres_indications_prelevement"
+                                    android:layout_width="match_parent"
+                                    android:inputType="text"
+                                    android:layout_height="wrap_content"
+                                    android:lines="1"
+                                    android:imeOptions="actionNext"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_resultas"
+                                android:layout_width="match_parent"
+                                android:visibility="gone"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:id="@+id/layout_resultats_covid_ag"
+                                    android:layout_width="match_parent"
+                                    android:visibility="gone"
+                                    android:orientation="horizontal"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/resultats_covid19_ac"
+                                        android:layout_marginTop="@dimen/fab_margin"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                    <RadioGroup
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_marginStart="@dimen/semi_fab_margin">
+
+                                        <com.google.android.material.radiobutton.MaterialRadioButton
+                                            android:id="@+id/radiobutton_covid_ag_positif"
+                                            android:layout_width="wrap_content"
+                                            android:layout_marginStart="@dimen/semi_fab_margin"
+                                            android:layout_marginEnd="@dimen/semi_fab_margin"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/positif"/>
+
+                                        <com.google.android.material.radiobutton.MaterialRadioButton
+                                            android:id="@+id/radiobutton_covid_ag_negatif"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/negatif"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                            android:layout_marginStart="@dimen/semi_fab_margin"
+                                            android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                    </RadioGroup>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/layout_resultats_covid_ac"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_weight="1"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/resultats_igc"
+                                            android:layout_marginTop="@dimen/fab_margin"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                        <RadioGroup
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical"
+                                            android:layout_marginStart="@dimen/semi_fab_margin">
+
+                                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                                android:id="@+id/radiobutton_covid_igc_positif"
+                                                android:layout_width="wrap_content"
+                                                android:layout_marginStart="@dimen/semi_fab_margin"
+                                                android:layout_marginEnd="@dimen/semi_fab_margin"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/positif"/>
+
+                                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                                android:id="@+id/radiobutton_covid_igc_negatif"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/negatif"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                                android:layout_marginStart="@dimen/semi_fab_margin"
+                                                android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                        </RadioGroup>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_weight="1"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/resultats_igm"
+                                            android:layout_marginTop="@dimen/fab_margin"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                        <RadioGroup
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical"
+                                            android:layout_marginStart="@dimen/semi_fab_margin">
+
+                                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                                android:id="@+id/radiobutton_covid_igm_positif"
+                                                android:layout_width="wrap_content"
+                                                android:layout_marginStart="@dimen/semi_fab_margin"
+                                                android:layout_marginEnd="@dimen/semi_fab_margin"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/positif"/>
+
+                                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                                android:id="@+id/radiobutton_covid_igm_negatif"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/negatif"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                                android:layout_marginStart="@dimen/semi_fab_margin"
+                                                android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                        </RadioGroup>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="@integer/radio_label_weight"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/conclusion"
+                                    android:layout_marginTop="@dimen/fab_margin"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+                                <RadioGroup
+                                    android:layout_width="0dp"
+                                    android:layout_weight="@integer/radio_options_weight"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="@dimen/semi_fab_margin">
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_conclusion_positif"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/positif"/>
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_conclusion_negatif"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/negatif"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/radiobutton_conclusion_indetermine"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/indetermine"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                        android:layout_marginStart="@dimen/semi_fab_margin"
+                                        android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:hint="@string/nom_manipulateur">
+
+                                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                    android:id="@+id/edittext_manipulateur"
+                                    android:layout_width="match_parent"
+                                    android:inputType="textPersonName"
+                                    android:layout_height="wrap_content"
+                                    android:lines="1"
+                                    android:imeOptions="actionNext"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/quater_fab_margin"
+                                android:layout_marginBottom="@dimen/quater_fab_margin"
+                                android:hint="@string/telephone_manipulateur">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edittext_telephone_manipulateur"
+                                    android:layout_width="match_parent"
+                                    android:inputType="number"
+                                    android:layout_height="wrap_content"
+                                    android:lines="1"
+                                    android:imeOptions="actionDone"
+                                    android:selectAllOnFocus="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="24dp"
+                    android:gravity="end">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_previous"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="wrap_content"
+                        android:enabled="false"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/quater_fab_margin"
+                        android:text="@string/precedent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_next"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/quater_fab_margin"
+                        android:text="@string/enregistrer" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+
+            </LinearLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

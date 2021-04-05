@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        android:id="@+id/layout_resultas"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:gravity="center_vertical"
+        android:padding="@dimen/semi_fab_margin"
+        android:background="@drawable/dialog_background">
+
+        <TextView
+            android:id="@+id/textview_examen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="@android:color/holo_red_light"
+            android:layout_margin="@dimen/fab_margin"
+            android:text="Test Invalide" />
+
+        <LinearLayout
+            android:id="@+id/layout_noms_patient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_margin="@dimen/semi_fab_margin">
+
+            <ImageView
+                android:id="@+id/label_nom_patient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="@dimen/semi_fab_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_round_person_24"
+                app:tint="@color/color_accent" />
+
+            <TextView
+                android:id="@+id/textview_nom_patient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/label_nom_patient"
+                app:layout_constraintStart_toEndOf="@id/label_nom_patient"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:gravity="center_vertical"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/fab_margin"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:text="KEMGANG NGOBEN ARTHUR KRAWIST" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_date_prelevement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_margin="@dimen/semi_fab_margin">
+
+            <ImageView
+                android:id="@+id/label_date_prelevement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:gravity="center_vertical"
+                android:padding="@dimen/semi_fab_margin"
+                android:src="@drawable/ic_round_calendar_today_24"
+                app:tint="@color/color_accent" />
+
+            <TextView
+                android:id="@+id/textview_date_prelevement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/label_date_prelevement"
+                app:layout_constraintStart_toEndOf="@id/label_date_prelevement"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/fab_margin"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:text="12 Jan. 2021 à 13:22" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_close_test_invalide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:layout_gravity="end"
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+    </LinearLayout>
+
+</layout>

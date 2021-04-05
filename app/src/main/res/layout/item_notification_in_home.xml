@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/fab_margin"
+    android:layout_marginStart="@dimen/fab_margin"
+    android:layout_marginEnd="@dimen/fab_margin"
+    android:layout_marginTop="@dimen/quater_fab_margin"
+    android:layout_marginBottom="@dimen/quater_fab_margin">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp"
+        android:background="@android:color/transparent">
+
+        <LinearLayout
+            android:id="@+id/layout_notification_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/img_covid"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/titre_notification"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/semi_fab_margin"
+                android:text="Covid - 19"
+                android:textColor="#D81B60"
+                android:textStyle="bold"
+                android:alpha=".8"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
+
+            <ImageButton
+                android:id="@+id/button_see_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_round_keyboard_arrow_down_24"
+                android:padding="@dimen/semi_fab_margin"
+                android:background="@drawable/button_round_background"
+                android:tint="?android:attr/colorForeground"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/contenu_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            app:layout_constraintTop_toBottomOf="@id/layout_notification_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="6dp"
+            android:text="Les résultats de Alain Tuchel sont Disponibles"
+            android:alpha=".8"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

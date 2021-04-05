@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/label_symptoms"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/asymptomatique"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/semi_fab_margin">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/oui"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/semi_fab_margin"
+            android:layout_marginEnd="@dimen/semi_fab_margin"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_height="wrap_content"
+            android:text="@string/oui"/>
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/non"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/non"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_marginStart="@dimen/semi_fab_margin"
+            android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/nsp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nsp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_marginStart="@dimen/semi_fab_margin"
+            android:layout_marginEnd="@dimen/semi_fab_margin"/>
+
+    </RadioGroup>
+
+</LinearLayout>

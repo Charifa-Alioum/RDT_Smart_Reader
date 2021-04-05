@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/dialog_min_width"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:minWidth="@dimen/dialog_min_width"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/fab_margin"
+        android:background="@drawable/dialog_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/semi_fab_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:text="Synchronisation en cours"/>
+
+            <ProgressBar
+                android:layout_width="25dp"
+                android:layout_marginStart="@dimen/fab_margin"
+                android:layout_height="25dp"/>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:progress="0"
+            android:layout_marginTop="@dimen/semi_fab_margin"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/quater_fab_margin">
+
+            <TextView
+                android:id="@+id/texview_number_synched"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="0"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+            <TextView
+                android:id="@+id/texview_number_to_synch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="10"
+                android:layout_gravity="end"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</layout>
