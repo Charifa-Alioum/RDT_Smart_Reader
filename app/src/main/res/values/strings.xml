@@ -96,4 +96,9 @@
     <string name="resultats_covid19_ag">Resultats COVID19 Ag</string>
     <string name="resultats_igc">Résultats Igc</string>
     <string name="resultats_igm">Résultats IgM</string>
+    <string name="synchronise">Synchronisé</string>
+    <string name="non_synchronise">Non Synchronisé</string>
+    <string name="tous_les_cas">Tous les cas</string>
+    <string name="transition_name_card_to_informations">card_home_to_informations</string>
+    <string name="file_provider_authority">com.example.android.fileprovider</string>
 </resources>

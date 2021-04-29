@@ -2,6 +2,7 @@ package cm.seeds.rdtsmartreader.ui.main.informations
 
 import android.app.Dialog
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,9 +18,7 @@ import cm.seeds.rdtsmartreader.data.Status
 import cm.seeds.rdtsmartreader.data.ViewModelFactory
 import cm.seeds.rdtsmartreader.databinding.FragmentInformationsBinding
 import cm.seeds.rdtsmartreader.databinding.LayoutSynchronisationBinding
-import cm.seeds.rdtsmartreader.helper.ToDoOnClick
-import cm.seeds.rdtsmartreader.helper.showMessage
-import cm.seeds.rdtsmartreader.helper.showToast
+import cm.seeds.rdtsmartreader.helper.*
 import cm.seeds.rdtsmartreader.modeles.User
 
 class InformationsFragment : Fragment() {
@@ -27,27 +26,33 @@ class InformationsFragment : Fragment() {
     private lateinit var informationsViewModel: InformationsViewModel
     private lateinit var dataBinding : FragmentInformationsBinding
     private lateinit var userAdapter: UserAdapter
-    private var typeOfData = TYPE_OF_DATA_PERSON
+    private var typeOfData = TYPE_OF_DATA_ALL_TEST
 
     private lateinit var synchronisationDialog : Dialog
     private lateinit var synchronisationDataBinding : LayoutSynchronisationBinding
+
+    private var paramAlreadyUsed = false
 
     companion object{
 
         const val TYPE_DATA_TO_SHOW = "type_of_data"
 
-        const val TYPE_OF_DATA_PERSON = 1
-        const val TYPE_OF_DATA_TEST = 2
-
+        const val TYPE_OF_DATA_ALL_TEST = 1
+        const val TYPE_OF_DATA_POSITIVE_TEST = 2
+        const val TYPE_OF_DATA_NEGATIVE_TEST = 3
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.explode)
+        sharedElementReturnTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.explode)
+
         informationsViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(requireActivity().application)).get(InformationsViewModel::class.java)
 
         arguments?.let {
-            typeOfData = it.getInt(TYPE_DATA_TO_SHOW, TYPE_OF_DATA_PERSON)
+            typeOfData = it.getInt(TYPE_DATA_TO_SHOW, TYPE_OF_DATA_ALL_TEST)
         }
 
         setupSynchronisationDialog()
@@ -92,7 +97,7 @@ class InformationsFragment : Fragment() {
                 informationsViewModel.userToSave.value = item as User
                 openBottomSheet()
             }
-        })
+        },R.layout.item_person)
         dataBinding.recyclerviewListPerson.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = userAdapter
@@ -103,21 +108,47 @@ class InformationsFragment : Fragment() {
 
         informationsViewModel.allUsers.observe(viewLifecycleOwner, {
 
-            userAdapter.submitList(it)
-            userAdapter.notifyDataSetChanged()
-
             val numbersPersonnesSync = it.count { item -> item.synchronised }
             val numbersPersonnesNotSync = it.count { item -> !item.synchronised }
+            val numbersPersonnesPositifs = it.count { item -> item.test?.conclusion == CONCLUSION_POSITIF }
+            val numbersPersonnesNegatifs = it.count { item -> item.test?.conclusion == CONCLUSION_NEGATIF }
+
+            dataBinding.textviewNombrePersonnes.text = "${it.size} ${getString(R.string.cas)}"
+            dataBinding.textNumberNotSynchedUsers.text = "$numbersPersonnesNotSync ${getString(R.string.non_synchronisees)}"
+            dataBinding.textNumberSynchedUsers.text = "$numbersPersonnesSync ${getString(R.string.synchronisees)}"
+            dataBinding.textNumberPositifsUsers.text = "$numbersPersonnesPositifs ${getString(R.string.positifs)}"
+            dataBinding.textNumberNegatifsUsers.text = "$numbersPersonnesNegatifs ${getString(R.string.negatifs)}"
+
+            if(paramAlreadyUsed){
+                userAdapter.submitList(it)
+            }else{
+                var list = listOf<User>()
+                when(typeOfData){
+
+                    TYPE_OF_DATA_ALL_TEST -> {
+                        list = it
+                    }
+
+                    TYPE_OF_DATA_NEGATIVE_TEST -> {
+                        list = it.filter { item -> item.test?.conclusion == CONCLUSION_NEGATIF }
+                    }
+
+                    TYPE_OF_DATA_POSITIVE_TEST -> {
+                        list = it.filter { item -> item.test?.conclusion == CONCLUSION_POSITIF }
+                    }
+
+                }
+
+                userAdapter.submitList(list)
+            }
+
+            userAdapter.notifyDataSetChanged()
 
             if(numbersPersonnesNotSync<=0){
                 dataBinding.buttonSynchronise.visibility = GONE
             }else{
                 dataBinding.buttonSynchronise.visibility = VISIBLE
             }
-
-            dataBinding.textviewNombrePersonnes.text = "${it.size} ${getString(R.string.cas)}"
-            dataBinding.textviewNombrePersonnesNotSynched.text = "$numbersPersonnesNotSync ${getString(R.string.non_synchronisees)}"
-            dataBinding.textviewNombrePersonnesSynchronisees.text = "$numbersPersonnesSync ${getString(R.string.synchronisees)}"
 
         })
 
@@ -177,6 +208,14 @@ class InformationsFragment : Fragment() {
 
         dataBinding.layoutAllSyncUsers.setOnClickListener {
             userAdapter.submitList(informationsViewModel.allUsers.value?.filter { item -> item.synchronised })
+        }
+
+        dataBinding.layoutAllNegatifsUsers.setOnClickListener {
+            userAdapter.submitList(informationsViewModel.allUsers.value?.filter { item -> item.test?.conclusion == CONCLUSION_NEGATIF })
+        }
+
+        dataBinding.layoutAllPositifsUsers.setOnClickListener {
+            userAdapter.submitList(informationsViewModel.allUsers.value?.filter { item -> item.test?.conclusion == CONCLUSION_POSITIF })
         }
 
         dataBinding.layoutAllUsers.setOnClickListener {

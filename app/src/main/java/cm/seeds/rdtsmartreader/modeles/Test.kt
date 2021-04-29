@@ -1,6 +1,8 @@
 package cm.seeds.rdtsmartreader.modeles
 
+import android.net.Uri
 import cm.seeds.rdtsmartreader.helper.*
+import java.io.Serializable
 
 data class Test(
 
@@ -15,8 +17,9 @@ data class Test(
         var resultatsCovidIgm : String = "",
         var conclusion : String = "",
         var manipulateur : String = "",
-        var telephoneManipulateur : String = ""
-    ){
+        var telephoneManipulateur : String = "",
+        var imageUri : String = ""
+    ) : Serializable{
 
     init {
 

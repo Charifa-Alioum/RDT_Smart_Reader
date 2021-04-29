@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.main.informations.InformationsFragment">
+        tools:context=".ui.main.informations.InformationsFragment"
+        android:transitionName="@string/transition_name_card_to_informations">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -64,42 +65,41 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_all_users"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:backgroundTint="#3300838F"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/semi_fab_margin"
+                    android:layout_marginStart="@dimen/semi_fab_margin"
+                    android:layout_marginEnd="@dimen/semi_fab_margin"
+                    android:background="@drawable/background_type_of_data"
+                    android:paddingStart="@dimen/fab_margin"
+                    android:paddingEnd="@dimen/fab_margin"
+                    android:paddingTop="@dimen/semi_fab_margin"
+                    android:paddingBottom="@dimen/semi_fab_margin">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_round_people_alt_24"
+                        android:layout_marginEnd="@dimen/semi_fab_margin"
+                        app:tint="?android:attr/colorForeground"/>
+
+                    <TextView
+                        android:id="@+id/textview_nombre_personnes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tous_les_cas"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/layout_all_users"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:backgroundTint="#3300838F"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/semi_fab_margin"
-                        android:layout_marginStart="@dimen/semi_fab_margin"
-                        android:layout_marginEnd="@dimen/semi_fab_margin"
-                        android:background="@drawable/background_type_of_data"
-                        android:paddingStart="@dimen/fab_margin"
-                        android:paddingEnd="@dimen/fab_margin"
-                        android:paddingTop="@dimen/semi_fab_margin"
-                        android:paddingBottom="@dimen/semi_fab_margin">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_round_people_alt_24"
-                            android:layout_marginEnd="@dimen/semi_fab_margin"
-                            app:tint="?android:attr/colorForeground"/>
-
-                        <TextView
-                            android:id="@+id/textview_nombre_personnes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layout_all_sync_users"
@@ -126,10 +126,44 @@
                             app:tint="?android:attr/colorForeground"/>
 
                         <TextView
-                            android:id="@+id/textview_nombre_personnes_synchronisees"
+                            android:id="@+id/text_number_synched_users"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/synchronisees"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_all_not_sync_users"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:backgroundTint="#40E53935"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/quater_fab_margin"
+                        android:layout_marginStart="@dimen/semi_fab_margin"
+                        android:layout_marginEnd="@dimen/semi_fab_margin"
+                        android:background="@drawable/background_type_of_data"
+                        android:paddingStart="@dimen/fab_margin"
+                        android:paddingEnd="@dimen/fab_margin"
+                        android:paddingTop="@dimen/semi_fab_margin"
+                        android:paddingBottom="@dimen/semi_fab_margin">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_round_sync_problem_24"
+                            android:layout_marginEnd="@dimen/semi_fab_margin"
+                            app:tint="?android:attr/colorForeground"/>
+
+                        <TextView
+                            android:id="@+id/text_number_not_synched_users"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/non_synchronisees"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
 
                     </LinearLayout>
@@ -137,35 +171,76 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layout_all_not_sync_users"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:backgroundTint="#40E53935"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/semi_fab_margin"
-                    android:layout_marginStart="@dimen/semi_fab_margin"
-                    android:layout_marginEnd="@dimen/semi_fab_margin"
-                    android:background="@drawable/background_type_of_data"
-                    android:paddingStart="@dimen/fab_margin"
-                    android:paddingEnd="@dimen/fab_margin"
-                    android:paddingTop="@dimen/semi_fab_margin"
-                    android:paddingBottom="@dimen/semi_fab_margin">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/layout_all_negatifs_users"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_round_sync_24"
+                        android:orientation="horizontal"
+                        android:backgroundTint="#4043A047"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/semi_fab_margin"
+                        android:layout_marginStart="@dimen/semi_fab_margin"
                         android:layout_marginEnd="@dimen/semi_fab_margin"
-                        app:tint="?android:attr/colorForeground"/>
+                        android:background="@drawable/background_type_of_data"
+                        android:paddingStart="@dimen/fab_margin"
+                        android:paddingEnd="@dimen/fab_margin"
+                        android:paddingTop="@dimen/semi_fab_margin"
+                        android:paddingBottom="@dimen/semi_fab_margin">
 
-                    <TextView
-                        android:id="@+id/textview_nombre_personnes_not_synched"
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_round_insert_emoticon_24"
+                            android:layout_marginEnd="@dimen/semi_fab_margin"
+                            app:tint="?android:attr/colorForeground"/>
+
+                        <TextView
+                            android:id="@+id/text_number_negatifs_users"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/negatifs"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_all_positifs_users"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                        android:orientation="horizontal"
+                        android:backgroundTint="#40E53935"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/quater_fab_margin"
+                        android:layout_marginStart="@dimen/semi_fab_margin"
+                        android:layout_marginEnd="@dimen/semi_fab_margin"
+                        android:background="@drawable/background_type_of_data"
+                        android:paddingStart="@dimen/fab_margin"
+                        android:paddingEnd="@dimen/fab_margin"
+                        android:paddingTop="@dimen/semi_fab_margin"
+                        android:paddingBottom="@dimen/semi_fab_margin">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_round_sick_emoticon_24"
+                            android:layout_marginEnd="@dimen/semi_fab_margin"
+                            app:tint="?android:attr/colorForeground"/>
+
+                        <TextView
+                            android:id="@+id/text_number_positifs_users"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/positifs"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

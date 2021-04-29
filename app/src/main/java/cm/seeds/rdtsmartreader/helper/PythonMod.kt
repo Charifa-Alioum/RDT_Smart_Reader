@@ -64,15 +64,15 @@ class PythonMod() {
 
         return when(category){
 
-            -1 -> "INDETERMINE"
+            -1 -> CONCLUSION_INDETERMINE
 
-            0 -> "NEGATIF"
+            0 -> CONCLUSION_NEGATIF
 
-            1 -> "POSITIF"
+            1 -> CONCLUSION_POSITIF
 
-            2 -> "INVALIDE"
+            2 -> CONCLUSION_INVALIDE
 
-            else -> "INDETERMINE"
+            else -> CONCLUSION_INDETERMINE
 
         }
     }
@@ -153,13 +153,13 @@ class PythonMod() {
     private suspend fun handleResult(bitmap: Bitmap?, results: List<Recognition?>?): Int {
         return withContext(Dispatchers.IO){
 
-            var lines = 0
-            var triangles = 0
+/*            var lines = 0
+            var triangles = 0*/
 
             var category : Int = -1
 
             if(bitmap!=null){
-                val canvas = Canvas(bitmap)
+                //val canvas = Canvas(bitmap)
                 val paint = Paint()
                 paint.color = Color.RED
                 paint.style = Paint.Style.STROKE
@@ -311,7 +311,7 @@ class PythonMod() {
                     2 -> {
                         // means two lines are present
                         val line1 = lines[0]
-                        val line2 = lines[1]
+                        //val line2 = lines[1]
                         val controlTriangle = triangles[0]
                         val test1Triangle = triangles[1]
                         val test2Triangle = triangles[2]

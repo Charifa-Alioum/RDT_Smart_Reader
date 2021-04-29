@@ -10,6 +10,7 @@ const val REQUEST_CODE_LOCATION_PERMISSION = 3
 const val REQUEST_CODE_WRITE_EXTERNAL_STORAGE_PERMISSION = 4
 const val REQUEST_CODE_READ_EXTERNAL_STORAGE_PERMISSION = 5
 const val REQUEST_CODE_CHOOSE_IMAGE = 6
+const val REQUEST_CODE_ACTIVITY_IMAGE_CAPTURE = 8
 
 
 const val MINIMUM_CONFIDENCE_TF_OD_API = 0.5f
@@ -57,6 +58,7 @@ const val RESULTATS_TEST_INDETERMINE = "Indéterminé"
 const val CONCLUSION_POSITIF = "Positif"
 const val CONCLUSION_NEGATIF = "Négatif"
 const val CONCLUSION_INDETERMINE = "Indéterminé"
+const val CONCLUSION_INVALIDE = "Invalide"
 
 
 /**
@@ -99,14 +101,14 @@ val navOptions = NavOptions.Builder()
  * duréé minimale de mise à jour de la derniére localisation connue
  * exprimé en millisecondes
  */
-const val MIN_TIME_LOCATION_UPDATE = 0.toLong()
+const val MIN_TIME_LOCATION_UPDATE = 10000.toLong()
 
 
 /**
  * distance minimale de mise à jour de la derniére localisation connue
  * exprimé en mètre
  */
-const val MIN_DISATNCE_LOCATION_UPDATE = 0f
+const val MIN_DISATNCE_LOCATION_UPDATE = 10f
 
 
 /**

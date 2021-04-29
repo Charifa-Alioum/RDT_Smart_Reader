@@ -11,8 +11,10 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.core.view.get
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -351,8 +353,8 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
 
 
         //Update sur les symptomes
-        dataBinding.radiobuttonAsymptomatiqueNon.isChecked = user.asymptomatique
-        if(user.asymptomatique){
+        dataBinding.radiobuttonAsymptomatiqueOui.isChecked = user.asymptomatique
+        if(!user.asymptomatique){
             dataBinding.layoutAllSymptome.visibility = VISIBLE
             dataBinding.dateDebutSymptomePatient.setText(parseDateToString(user.dateDebutSymptomes, DATE_FORMAT))
         }else{
@@ -759,65 +761,83 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun addActionsonViews() {
 
-        dataBinding.regionPatient.doOnTextChanged { text, _, _, _ ->
-            informationsViewModel.setupDistrictOf(text.toString())
+        dataBinding.regionPatient.doAfterTextChanged {
+            informationsViewModel.setupDistrictOf(it.toString())
         }
 
-        dataBinding.radiobuttonNatureTestCovidAc.setOnCheckedChangeListener { _, isChecked ->
+        dataBinding.radiogroupNatureTest.setOnCheckedChangeListener { _, checkedId ->
             dataBinding.layoutResultas.visibility = VISIBLE
-            if(isChecked){
-                dataBinding.layoutResultatsCovidAc.visibility = VISIBLE
-                dataBinding.layoutResultatsCovidAg.visibility = GONE
-            }else{
-                dataBinding.layoutResultatsCovidAc.visibility = GONE
-                dataBinding.layoutResultatsCovidAg.visibility = VISIBLE
-            }
+            when(checkedId){
+                R.id.radiobutton_nature_test_covid_ac ->{
+                    dataBinding.layoutResultatsCovidAc.visibility = VISIBLE
+                    dataBinding.layoutResultatsCovidAg.visibility = GONE
+                }
 
-        }
-
-        dataBinding.radiobuttonAsymptomatiqueOui.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                dataBinding.layoutAllSymptome.visibility = GONE
-            } else {
-                dataBinding.layoutAllSymptome.visibility = VISIBLE
+                R.id.radiobutton_nature_test_covid_ag -> {
+                    dataBinding.layoutResultatsCovidAc.visibility = GONE
+                    dataBinding.layoutResultatsCovidAg.visibility = VISIBLE
+                }
             }
         }
 
-        dataBinding.radiobuttonProfessionnelSanteOui.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked){
-                dataBinding.layoutProfessionnelDante.visibility = VISIBLE
-            }else{
-                dataBinding.layoutProfessionnelDante.visibility = GONE
+        dataBinding.radiogroupAsymptomatique.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.radiobutton_asymptomatique_oui ->{
+                    dataBinding.layoutAllSymptome.visibility = GONE
+                }
+
+                R.id.radiobutton_asymptomatique_non ->{
+                    dataBinding.layoutAllSymptome.visibility = VISIBLE
+                }
             }
         }
 
-        dataBinding.radiobuttonIndicationsTestAutre.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked){
-                dataBinding.layoutAutreIndicationsPrelevement.visibility = VISIBLE
-            }else{
-                dataBinding.layoutAutreIndicationsPrelevement.visibility = GONE
+        dataBinding.radiogroupProfessionnelSante.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.radiobutton_professionnel_sante_non ->{
+                    dataBinding.layoutProfessionnelDante.visibility = GONE
+                }
+
+                R.id.radiobutton_professionnel_sante_oui ->{
+                    dataBinding.layoutProfessionnelDante.visibility = VISIBLE
+                }
             }
         }
 
-
-        dataBinding.radiobuttonTypePrelevementAutre.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked){
-                dataBinding.layoutAutreTypePrelevement.visibility = VISIBLE
-            }else{
-                dataBinding.layoutAutreTypePrelevement.visibility = GONE
+        dataBinding.radiogroupIndicationTest.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.radiobutton_indications_test_autre -> {
+                    dataBinding.layoutAutreIndicationsPrelevement.visibility = VISIBLE
+                }
+                else ->{
+                    dataBinding.layoutAutreIndicationsPrelevement.visibility = GONE
+                }
             }
         }
 
-        dataBinding.radiobuttonStatusCaseMort.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                dataBinding.layoutDateDeces.visibility = VISIBLE
-            } else {
-                dataBinding.layoutDateDeces.visibility = GONE
+        dataBinding.radiogroupTypePrelevement.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.radiobutton_type_prelevement_autre ->{
+                    dataBinding.layoutAutreTypePrelevement.visibility = VISIBLE
+                }
+                else -> {
+                    dataBinding.layoutAutreTypePrelevement.visibility = GONE
+                }
+            }
+        }
+
+        dataBinding.radiogroupStatusCas.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.radiobutton_status_case_mort ->{
+                    dataBinding.layoutDateDeces.visibility = VISIBLE
+                }
+                R.id.radiobutton_status_case_vivant ->{
+                    dataBinding.layoutDateDeces.visibility = GONE
+                }
             }
         }
 
         dataBinding.buttonDateDebutSymptome.setOnClickListener {
-
             val datePicker = MaterialDatePicker
                     .Builder
                     .datePicker()

@@ -346,6 +346,7 @@
                                 </com.google.android.material.textfield.TextInputLayout>
 
                                 <RadioGroup
+                                    android:id="@+id/radiogroup_age"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
@@ -393,6 +394,7 @@
                                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                     <RadioGroup
+                                        android:id="@+id/radiogroup_professionnel_sante"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:orientation="horizontal"
@@ -456,6 +458,7 @@
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                 <RadioGroup
+                                    android:id="@+id/radiogroup_status_cas"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
@@ -557,6 +560,7 @@
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                 <RadioGroup
+                                    android:id="@+id/radiogroup_asymptomatique"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
@@ -670,6 +674,7 @@
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                 <RadioGroup
+                                    android:id="@+id/radiogroup_nature_test"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
@@ -712,6 +717,7 @@
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                 <RadioGroup
+                                    android:id="@+id/radiogroup_type_prelevement"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
@@ -775,6 +781,7 @@
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                 <RadioGroup
+                                    android:id="@+id/radiogroup_indication_test"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
@@ -856,6 +863,7 @@
                                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                     <RadioGroup
+                                        android:id="@+id/radiogroup_resultat_covid_ac"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:orientation="vertical"
@@ -904,6 +912,7 @@
                                             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                         <RadioGroup
+                                            android:id="@+id/radiogroup_resultat_covid_igc"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
@@ -945,6 +954,7 @@
                                             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                         <RadioGroup
+                                            android:id="@+id/radiogroup_resultat_covid_igm"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
@@ -992,6 +1002,7 @@
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                 <RadioGroup
+                                    android:id="@+id/radiogrouo_conclusion"
                                     android:layout_width="0dp"
                                     android:layout_weight="@integer/radio_options_weight"
                                     android:layout_height="wrap_content"

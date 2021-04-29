@@ -1,6 +1,8 @@
 package cm.seeds.rdtsmartreader.ui.main.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -10,11 +12,14 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import cm.seeds.rdtsmartreader.R
 import cm.seeds.rdtsmartreader.data.ViewModelFactory
 import cm.seeds.rdtsmartreader.databinding.FragmentHomeBinding
 import cm.seeds.rdtsmartreader.helper.navOptions
+import cm.seeds.rdtsmartreader.service.Server
+import cm.seeds.rdtsmartreader.ui.main.informations.InformationsFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
@@ -22,8 +27,14 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var dataBinding : FragmentHomeBinding
 
+    private var isConnected = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.explode)
+        sharedElementReturnTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.explode)
+
         homeViewModel = ViewModelProvider(this, ViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
     }
 
@@ -77,6 +88,48 @@ class HomeFragment : Fragment() {
     }
 
     private fun addActionsOnViews() {
+
+        dataBinding.buttonConnectToServer.setOnClickListener {
+            if(isConnected){
+                requireContext().startService(Intent(requireContext(),Server::class.java).apply {
+                    action = Server.ACTION_DISCONNECT_TO_SERVER
+                })
+                isConnected = false
+            }else{
+                requireContext().startService(Intent(requireContext(), Server::class.java).apply {
+                    action = Server.ACTION_CONNECT_TO_SERVER
+                })
+                isConnected = true
+            }
+        }
+
+        dataBinding.layoutAllTest.setOnClickListener {
+            val navExtras = FragmentNavigatorExtras(
+                dataBinding.layoutAllTest to dataBinding.layoutAllTest.transitionName
+            )
+
+            findNavController().navigate(R.id.informationsFragment,Bundle().apply {
+                putInt(InformationsFragment.TYPE_DATA_TO_SHOW,InformationsFragment.TYPE_OF_DATA_ALL_TEST)
+            },null, navExtras)
+        }
+
+        dataBinding.layoutPostiveTests.setOnClickListener {
+            val navExtras = FragmentNavigatorExtras(
+                dataBinding.layoutPostiveTests to dataBinding.layoutPostiveTests.transitionName
+            )
+            findNavController().navigate(R.id.informationsFragment,Bundle().apply {
+                putInt(InformationsFragment.TYPE_DATA_TO_SHOW,InformationsFragment.TYPE_OF_DATA_POSITIVE_TEST)
+            }, null, navExtras)
+        }
+
+        dataBinding.layoutNegativeTest.setOnClickListener {
+            val navExtras = FragmentNavigatorExtras(
+                dataBinding.layoutNegativeTest to dataBinding.layoutNegativeTest.transitionName
+            )
+            findNavController().navigate(R.id.informationsFragment,Bundle().apply {
+                putInt(InformationsFragment.TYPE_DATA_TO_SHOW,InformationsFragment.TYPE_OF_DATA_NEGATIVE_TEST)
+            }, null, navExtras)
+        }
 
         dataBinding.buttonMoreAction.setOnClickListener {
             if(dataBinding.buttonCapture.isVisible){

@@ -8,7 +8,8 @@ import androidx.room.TypeConverters
 import cm.seeds.rdtsmartreader.modeles.Test
 import cm.seeds.rdtsmartreader.modeles.User
 
-@Database(entities = [User::class], version = 9)
+@Database(entities = [User::class], version = 12)
+//@TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     companion object{
         private var INSTANCE : AppDatabase? = null

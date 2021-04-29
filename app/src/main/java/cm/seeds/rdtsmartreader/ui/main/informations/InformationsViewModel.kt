@@ -58,30 +58,42 @@ class InformationsViewModel(val application: Application) : ViewModel() {
 
     }
 
-    fun saveUser(){
+    fun saveUser(user: User? = null){
 
-        userSavingResult = liveData {
+       when{
 
-            emit(RequestResult.loading(null))
+           user!=null ->{
+               viewModelScope.launch {
+                   dao.saveUser(listOf(user))
+               }
+           }
 
-            try {
-                val user = userToSave.value
+           else -> {
+               userSavingResult = liveData {
 
-                user?.test = testToSave.value
+                   emit(RequestResult.loading(null))
 
-                if(user?.test != null){
-                    user.synchronised = false
-                    dao.saveUser(mutableListOf(user))
-                }
+                   try {
+                       val userToSave = userToSave.value
 
-                emit(RequestResult.success(userToSave.value))
+                       userToSave?.test = testToSave.value
 
-                userToSave = MutableLiveData(User(coordonnee = loadLocation(application)))
+                       if(userToSave?.test != null){
+                           userToSave.synchronised = false
+                           dao.saveUser(mutableListOf(userToSave))
+                       }
 
-            }catch (e : Exception){
-                emit(RequestResult.error(e.message?:"Erreur lors de l'enregistrement",null))
-            }
-        }
+                       emit(RequestResult.success(userToSave))
+
+                       this@InformationsViewModel.userToSave = MutableLiveData(User(coordonnee = loadLocation(application)))
+
+                   }catch (e : Exception){
+                       emit(RequestResult.error(e.message?:"Erreur lors de l'enregistrement",null))
+                   }
+               }
+           }
+
+       }
 
     }
 

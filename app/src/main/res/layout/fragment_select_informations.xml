@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_round_arrow_back_24"
+            android:padding="@dimen/semi_fab_margin"
+            android:tint="?android:attr/colorForeground"
+            android:background="@drawable/button_round_background"/>
+
+        <TextView
+            android:id="@+id/texview_page_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choix du Patient"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintTop_toTopOf="@id/search_button"
+            app:layout_constraintBottom_toBottomOf="@id/search_button"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintEnd_toStartOf="@id/search_button"/>
+
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/semi_fab_margin"
+            android:src="@drawable/ic_round_search_24"
+            android:tint="?android:attr/colorForeground"
+            android:background="@drawable/button_round_background"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editlayout_search_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Nom du patient"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginTop="@dimen/fab_margin"
+            app:layout_constraintTop_toBottomOf="@id/texview_page_label">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_filters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginTop="@dimen/fab_margin"
+            app:layout_constraintTop_toBottomOf="@id/editlayout_search_field">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_synched"
+                android:layout_width="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/filter_not_synched"
+                android:layout_marginEnd="@dimen/quater_fab_margin"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#4CAF50">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_synched"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/synchronisees"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/semi_fab_margin"
+                    android:layout_marginEnd="@dimen/semi_fab_margin"
+                    android:paddingHorizontal="@dimen/semi_fab_margin"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textAllCaps="true"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_not_synched"
+                android:layout_width="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/filter_synched"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/semi_fab_margin"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#E91E63">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_not_synched"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/non_synchronisees"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/semi_fab_margin"
+                    android:layout_marginStart="@dimen/semi_fab_margin"
+                    android:layout_marginEnd="@dimen/semi_fab_margin"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textAllCaps="true"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_test_positif"
+                android:layout_width="0dp"
+                app:layout_constraintTop_toBottomOf="@id/filter_synched"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/filter_test_negatif"
+                android:layout_marginEnd="@dimen/semi_fab_margin"
+                android:layout_marginTop="@dimen/semi_fab_margin"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#FF5722">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_test_positifs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/positifs"
+                    android:paddingHorizontal="@dimen/semi_fab_margin"
+                    android:layout_marginStart="@dimen/semi_fab_margin"
+                    android:layout_marginEnd="@dimen/semi_fab_margin"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textAllCaps="true"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_test_negatif"
+                android:layout_width="0dp"
+                app:layout_constraintTop_toBottomOf="@id/filter_synched"
+                app:layout_constraintStart_toEndOf="@id/filter_test_positif"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/semi_fab_margin"
+                android:layout_marginStart="@dimen/quater_fab_margin"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#3F51B5">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_test_negatifs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/negatifs"
+                    android:paddingHorizontal="@dimen/semi_fab_margin"
+                    android:layout_marginStart="@dimen/semi_fab_margin"
+                    android:layout_marginEnd="@dimen/semi_fab_margin"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textAllCaps="true"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_list_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/layout_filters"
+            android:layout_marginTop="@dimen/semi_fab_margin"
+            tools:listitem="@layout/item_person"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

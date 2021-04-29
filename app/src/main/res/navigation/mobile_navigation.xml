@@ -3,22 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/homeFragment">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/homeFragment"
         android:name="cm.seeds.rdtsmartreader.ui.main.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_informations"
+        android:id="@+id/informationsFragment"
         android:name="cm.seeds.rdtsmartreader.ui.main.informations.InformationsFragment"
         android:label="@string/informations"
-        tools:layout="@layout/fragment_informations" />
+        tools:layout="@layout/fragment_informations">
+        <argument android:defaultValue="1"
+            app:argType="integer"
+            android:name="type_of_data"/>
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_settings"
+        android:id="@+id/settingsFragment"
         android:name="cm.seeds.rdtsmartreader.ui.main.settings.SettingsFragment"
         android:label="@string/parametres"
         tools:layout="@layout/fragment_settings" />

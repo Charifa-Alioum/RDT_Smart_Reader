@@ -54,6 +54,7 @@ data class User(
 
         @Embedded
         var coordonnee: Coordonnee?,
+
         @Embedded
         var test: Test? = null
 ) {

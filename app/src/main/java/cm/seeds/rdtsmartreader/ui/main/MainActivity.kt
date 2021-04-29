@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
@@ -27,6 +26,16 @@ import cm.seeds.rdtsmartreader.ui.main.informations.InformationsViewModel
 class MainActivity : AppCompatActivity() {
 
     private lateinit var informationsViewModel : InformationsViewModel
+    private var locationManager : LocationManager? = null
+
+    private val locationListener = LocationListener { location ->
+        val latitude = location.latitude
+        val longitude = location.longitude
+        saveLocation(
+                this@MainActivity,
+                Coordonnee(latitude = latitude.toFloat(), longitude = longitude.toFloat())
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +46,17 @@ class MainActivity : AppCompatActivity() {
 
         setupNavController()
 
+        //prepareAndGetLocalisation()
+    }
+
+    override fun onResume() {
+        super.onResume()
         prepareAndGetLocalisation()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationListener()
     }
 
     private fun prepareAndGetLocalisation() {
@@ -91,28 +110,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun stopLocationListener(){
+        if(locationManager!=null){
+            locationManager?.removeUpdates(locationListener)
+        }
+    }
+
     @SuppressLint("MissingPermission")
     private fun listenLocation() {
-        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if(
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                    locationManager.isLocationEnabled
+                    locationManager?.isLocationEnabled == true
                 } else {
                     true
                 }
         ){
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    MIN_TIME_LOCATION_UPDATE, MIN_DISATNCE_LOCATION_UPDATE
-            ) { location ->
-                val latitude = location.latitude
-                val longitude = location.longitude
-                saveLocation(
-                    this@MainActivity,
-                    Coordonnee(latitude = latitude.toFloat(), longitude = longitude.toFloat())
-                )
-            }
-
-            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)?.let {
+            locationManager?.requestLocationUpdates(
+                    LocationManager.PASSIVE_PROVIDER,
+                    MIN_TIME_LOCATION_UPDATE, MIN_DISATNCE_LOCATION_UPDATE,
+                    locationListener)
+            locationManager?.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)?.let {
                 saveLocation(this, Coordonnee(latitude = it.latitude.toFloat(), longitude = it.longitude.toFloat()))
             }
         }
@@ -133,15 +151,15 @@ class MainActivity : AppCompatActivity() {
 
             when(destination.id){
 
-                R.id.navigation_home -> {
+                R.id.homeFragment -> {
                     navView.visibility = VISIBLE
                 }
 
-                R.id.navigation_settings ->{
+                R.id.settingsFragment ->{
                     navView.visibility = VISIBLE
                 }
 
-                R.id.navigation_informations ->{
+                R.id.informationsFragment ->{
                     navView.visibility = VISIBLE
                 }
 

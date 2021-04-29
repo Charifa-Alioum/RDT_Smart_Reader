@@ -33,7 +33,8 @@
                         android:layout_marginStart="@dimen/fab_margin"
                         android:layout_marginEnd="@dimen/fab_margin"
                         android:layout_marginTop="@dimen/fab_margin"
-                        android:layout_marginBottom="@dimen/quater_fab_margin">
+                        android:layout_marginBottom="@dimen/quater_fab_margin"
+                        android:transitionName="@string/transition_name_card_to_informations">
 
                         <TextView
                             android:id="@+id/textview_nombre_test"
@@ -63,7 +64,8 @@
                             app:cardBackgroundColor="#00897B"
                             android:layout_marginStart="@dimen/fab_margin"
                             android:layout_marginTop="@dimen/quater_fab_margin"
-                            android:layout_marginBottom="@dimen/semi_fab_margin">
+                            android:layout_marginBottom="@dimen/semi_fab_margin"
+                            android:transitionName="@string/transition_name_card_to_informations">
 
                             <TextView
                                 android:id="@+id/textview_nombre_test_positifs"
@@ -79,7 +81,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/layout_negative_result"
+                            android:id="@+id/layout_negative_test"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
@@ -88,7 +90,8 @@
                             android:layout_marginTop="@dimen/quater_fab_margin"
                             android:layout_marginEnd="@dimen/fab_margin"
                             android:layout_marginBottom="@dimen/semi_fab_margin"
-                            android:layout_marginStart="@dimen/semi_fab_margin">
+                            android:layout_marginStart="@dimen/semi_fab_margin"
+                            android:transitionName="@string/transition_name_card_to_informations">
 
                             <TextView
                                 android:id="@+id/textview_nombre_test_negatifs"
@@ -192,6 +195,43 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/fab_margin">
+
+                    <ImageButton
+                        android:id="@+id/router_active"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_round_router_24"
+                        android:padding="@dimen/semi_fab_margin"
+                        android:layout_margin="@dimen/semi_fab_margin"
+                        android:background="@drawable/button_round_background"
+                        android:tint="@android:color/holo_red_light"/>
+
+
+                    <TextView
+                        android:id="@+id/textview_server_connected_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:gravity="center"
+                        android:text="Vous n'êtes pas connecté au dispositif"
+                        android:textColor="@android:color/holo_red_light"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_connect_to_server"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Se connecter au dsipositif"
+                    android:layout_marginStart="@dimen/fab_margin"
+                    android:layout_marginEnd="@dimen/fab_margin"/>
 
             </LinearLayout>
 

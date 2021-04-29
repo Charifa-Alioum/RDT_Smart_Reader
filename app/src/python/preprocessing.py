@@ -62,7 +62,7 @@ def enhance_img(img, clip):
 # to resize image in order to conserve ratio
 def resize_image(image, width = None, height = None, inter = cv2.INTER_CUBIC):
     # initialize the dimensions of the image to be resized and
-    # grab the image size
+    # grab the image sizeDecoder
     dim = None
     (h, w) = image.shape[:2]
     print(h,w)

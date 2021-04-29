@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="user"
+            type="cm.seeds.rdtsmartreader.modeles.User" />
+    </data>
 
     <com.google.android.material.card.MaterialCardView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,14 +23,33 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/semi_fab_margin">
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardElevation="0dp">
+
+                    <ImageView
+                        android:id="@+id/image_test"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <TextView
                 android:id="@+id/nom_personne"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Alin Tuchel"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{user.userName}"
+                app:layout_constraintStart_toEndOf="@id/card_image"
+                android:layout_marginStart="@dimen/semi_fab_margin"
                 app:layout_constraintEnd_toStartOf="@id/statut_maladie"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/card_image"
+                app:layout_constraintBottom_toTopOf="@id/details_personne"
+                app:layout_constraintVertical_chainStyle="packed"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textStyle="bold"/>
 
@@ -32,9 +58,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@id/statut_maladie"
-                android:text="24 ans - Mballa 2"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{user.userAge+`ans - `+user.userDomicile}"
                 app:layout_constraintTop_toBottomOf="@id/nom_personne"
+                app:layout_constraintStart_toEndOf="@id/card_image"
+                android:layout_marginStart="@dimen/semi_fab_margin"
+                app:layout_constraintBottom_toTopOf="@id/synched_state"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 android:alpha=".6"/>
 
@@ -43,18 +71,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@id/statut_maladie"
-                android:text="Non Synchronisé"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{user.synchronised ? @string/synchronise : @string/non_synchronise}"
                 app:layout_constraintTop_toBottomOf="@id/details_personne"
                 android:textColor="#f00"
-                android:visibility="visible"
+                app:layout_constraintStart_toEndOf="@id/card_image"
+                android:layout_marginStart="@dimen/semi_fab_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="@{user.synchronised ? View.GONE : View.VISIBLE}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"/>
 
             <TextView
                 android:id="@+id/statut_maladie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Négatif"
+                android:text="@{user.test.conclusion}"
                 android:textColor="#00897B"
                 app:layout_constraintTop_toTopOf="@id/nom_personne"
                 app:layout_constraintBottom_toBottomOf="@id/synched_state"
