@@ -10,12 +10,13 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -196,42 +197,65 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_dispositif"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/fab_margin">
+                    android:layout_marginStart="@dimen/fab_margin"
+                    android:layout_marginEnd="@dimen/fab_margin"
+                    android:layout_marginTop="@dimen/semi_fab_margin"
+                    app:cardCornerRadius="@dimen/fab_margin">
 
-                    <ImageButton
-                        android:id="@+id/router_active"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_round_router_24"
-                        android:padding="@dimen/semi_fab_margin"
-                        android:layout_margin="@dimen/semi_fab_margin"
-                        android:background="@drawable/button_round_background"
-                        android:tint="@android:color/holo_red_light"/>
-
-
-                    <TextView
-                        android:id="@+id/textview_server_connected_status"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:gravity="center"
-                        android:text="Vous n'êtes pas connecté au dispositif"
-                        android:textColor="@android:color/holo_red_light"/>
+                        android:orientation="vertical"
+                        android:padding="@dimen/fab_margin">
 
-                </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/icon_router"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:src="@drawable/ic_round_router_24"
+                            android:background="@drawable/button_round_background"
+                            android:tint="@android:color/holo_red_light"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_connect_to_server"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Se connecter au dsipositif"
-                    android:layout_marginStart="@dimen/fab_margin"
-                    android:layout_marginEnd="@dimen/fab_margin"/>
+                        <TextView
+                            android:id="@+id/label_dispositif"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dispositif"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/icon_router"
+                            app:layout_constraintTop_toTopOf="@id/icon_router"
+                            app:layout_constraintBottom_toBottomOf="@id/icon_router"
+                            android:layout_marginStart="@dimen/semi_fab_margin"/>
+
+                        <TextView
+                            android:id="@+id/state_connexion_dispositif"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/label_dispositif"
+                            android:layout_marginTop="@dimen/semi_fab_margin"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="Vous n'êtes pas connecté au dispositif"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_connect_to_server"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/state_connexion_dispositif"
+                            android:layout_marginTop="@dimen/semi_fab_margin"
+                            android:text="Se connecter au dsipositif"
+                            app:elevation="0dp"
+                            app:cornerRadius="@dimen/semi_fab_margin"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 

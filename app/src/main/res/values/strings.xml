@@ -50,7 +50,7 @@
     <string name="decede">Décédé</string>
     <string name="vivant">Vivant</string>
     <string name="precedent">Précédent</string>
-    <string name="asymptomatique">Asymptomatique</string>
+    <string name="asymptomatique">La patient a t\'il des symptomes?</string>
     <string name="date_debut_symptome">Date début symptome</string>
     <string name="nsp">NSP</string>
     <string name="informations_personnelles">Informations Personnelles</string>
@@ -101,4 +101,14 @@
     <string name="tous_les_cas">Tous les cas</string>
     <string name="transition_name_card_to_informations">card_home_to_informations</string>
     <string name="file_provider_authority">com.example.android.fileprovider</string>
+    <string name="nom_de_la_page">Nom de la page</string>
+    <string name="description_de_la_page">Description de la page</string>
+    <string name="details_de_la_page">Details de la page</string>
+    <string name="ajouter_une_question">Ajouter une question</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="required">Required</string>
+    <string name="hint_required_question">Permet de savoir si cette question est oblligatoire ou pas</string>
+    <string name="description_de_la_question">Description de la question</string>
+    <string name="nom_du_formulaire">Nom du formulaire</string>
+    <string name="Camera">Caméra</string>
 </resources>

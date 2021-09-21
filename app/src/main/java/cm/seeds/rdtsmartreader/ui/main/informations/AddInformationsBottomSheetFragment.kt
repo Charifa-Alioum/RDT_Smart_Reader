@@ -11,11 +11,9 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
-import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.core.view.get
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -340,7 +338,7 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
         dataBinding.radiobuttonProfessionnelSanteNon.isChecked = !user.isDoctor
         if(dataBinding.radiobuttonProfessionnelSanteOui.isChecked){
             dataBinding.edittextProfessionnelSante.setText(user.professionPersonnelSante)
-            dataBinding.layoutProfessionnelDante.visibility = VISIBLE
+            dataBinding.inputLayoutProfessionnelDante.visibility = VISIBLE
         }
 
 
@@ -348,19 +346,19 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
         dataBinding.radiobuttonStatusCaseMort.isChecked = !user.isAlive
         if(dataBinding.radiobuttonStatusCaseMort.isChecked){
             dataBinding.layoutDateDeces.visibility = VISIBLE
-            dataBinding.dateDecesPatient.setText(parseDateToString(user.dateDeces, DATE_FORMAT))
+            dataBinding.dateDecesPatient.setText(formatDate(user.dateDeces, DATE_FORMAT))
         }
 
 
         //Update sur les symptomes
-        dataBinding.radiobuttonAsymptomatiqueOui.isChecked = user.asymptomatique
-        if(!user.asymptomatique){
+        dataBinding.radiobuttonHaveSymptomsOui.isChecked = user.haveSymptoms
+        dataBinding.radiobuttonHaveSymptomsNon.isChecked = !user.haveSymptoms
+        if(user.haveSymptoms){
             dataBinding.layoutAllSymptome.visibility = VISIBLE
-            dataBinding.dateDebutSymptomePatient.setText(parseDateToString(user.dateDebutSymptomes, DATE_FORMAT))
         }else{
             dataBinding.layoutAllSymptome.visibility = GONE
-            dataBinding.dateDebutSymptomePatient.setText("")
         }
+        dataBinding.dateDebutSymptomePatient.setText(formatDate(user.dateDebutSymptomes, DATE_FORMAT))
 
 /*        if (user.genre) {
             dataBinding.radiobuttonGenreFeminin.isChecked = false
@@ -499,98 +497,89 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
                 }
 
                 if (TextUtils.isEmpty(id)) {
-                    dataBinding.edittextIdentifiants.error = ""
+                    dataBinding.inputLayoutIdentifiants.error = "Indentifiant non fourni"
                     isCorrect = false
                 } else {
                     user.userId = id
-                    dataBinding.edittextIdentifiants.error = null
-                }
-
-
-                if (TextUtils.isEmpty(id)) {
-                    dataBinding.edittextIdentifiants.error = ""
-                    isCorrect = false
-                } else {
-                    user.userId = id
-                    dataBinding.edittextIdentifiants.error = null
+                    dataBinding.inputLayoutIdentifiants.error = null
                 }
 
 
                 if (TextUtils.isEmpty(names)) {
-                    dataBinding.edittextNomClient.error = ""
+                    dataBinding.inputLayoutNomPatient.error = "Nom du patient non fourni"
                     isCorrect = false
                 } else {
                     user.userName = names
-                    dataBinding.edittextNomClient.error = null
+                    dataBinding.inputLayoutNomPatient.error = null
                 }
 
                 if (TextUtils.isEmpty(profession)) {
-                    dataBinding.professionPatient.error = ""
+                    dataBinding.inputLayoutProfessionPatient.error = "Profession du patient non fournie"
                     isCorrect = false
                 } else {
                     user.profession = profession
-                    dataBinding.professionPatient.error = null
+                    dataBinding.inputLayoutProfessionPatient.error = null
                 }
 
                 if (TextUtils.isEmpty(domicile)) {
-                    dataBinding.edittextDomilePatient.error = ""
+                    dataBinding.inputLayoutDomicilePatient.error = "Domicile du patient non fourni"
                     isCorrect = false
                 } else {
                     user.userDomicile = domicile
-                    dataBinding.edittextDomilePatient.error = null
+                    dataBinding.inputLayoutDomicilePatient.error = null
                 }
 
                 if (TextUtils.isEmpty(region)) {
-                    dataBinding.regionPatient.error = ""
+                    dataBinding.inputLayoutRegionPatient.error = "Region du patient non fournie"
                     isCorrect = false
                 } else {
                     user.ville = region
-                    dataBinding.regionPatient.error = null
+                    dataBinding.inputLayoutRegionPatient.error = null
                 }
 
                 if (TextUtils.isEmpty(aireSante)) {
-                    dataBinding.aireSantePatient.error = ""
+                    dataBinding.inputLayoutAiresantePatient.error = "Aire de santé du patient non fournie"
                     isCorrect = false
                 } else {
                     user.aireDeSante = aireSante
-                    dataBinding.aireSantePatient.error = null
+                    dataBinding.inputLayoutAiresantePatient.error = null
                 }
 
                 if (TextUtils.isEmpty(district)) {
-                    dataBinding.districtPatient.error = ""
+                    dataBinding.inputLayoutDisctrictPatient.error = "District du patient non fourni"
                     isCorrect = false
                 } else {
                     user.district = district
-                    dataBinding.districtPatient.error = null
+                    dataBinding.inputLayoutDisctrictPatient.error = null
                 }
 
                 if (TextUtils.isEmpty(telephone)) {
-                    dataBinding.edittextTelephonePatient.error = ""
+                    dataBinding.inputLayoutTelephonePatient.error = "Téléphone du patient non fourni"
                     isCorrect = false
                 } else {
                     user.telephone = telephone
-                    dataBinding.edittextTelephonePatient.error = null
+                    dataBinding.inputLayoutTelephonePatient.error = null
                 }
 
                 user.genre = genre
                 user.isAgeInYear = isYear
 
                 if (age <= 0) {
-                    dataBinding.edittextAgePatient.error = ""
+                    dataBinding.inputLayoutAgePatient.error = "Age du patient non fourni"
                     isCorrect = false
                 } else {
                     user.userAge = age
-                    dataBinding.edittextAgePatient.error = null
+                    dataBinding.inputLayoutAgePatient.error = null
                 }
 
                 user.isDoctor = isProfessionnelSante
 
                 if(isProfessionnelSante){
                     if(TextUtils.isEmpty(professionSante)){
-                        dataBinding.edittextProfessionnelSante.error = ""
+                        dataBinding.inputLayoutProfessionnelDante.error = "Quel poste occupe le patient dans le domaine de la santé"
                         isCorrect = false
                     }else{
-                        dataBinding.edittextProfessionnelSante.error = null
+                        dataBinding.inputLayoutProfessionnelDante.error = null
                         user.professionPersonnelSante = professionSante
                     }
                 }
@@ -600,14 +589,15 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
 
                 if (!isAlive) {
                     if (TextUtils.isEmpty(dateMort)) {
-                        dataBinding.dateDecesPatient.error = ""
+                        dataBinding.inputlayoutDateDeces.error = "Quelle est la date de décès du patient"
                         isCorrect = false
                     } else {
                         user.dateDeces = try {
+                            dataBinding.inputlayoutDateDeces.error = null
                             SimpleDateFormat(DATE_FORMAT).parse(dateMort).time
                         } catch (e: ParseException) {
                             isCorrect = false
-                            dataBinding.dateDecesPatient.error = ""
+                            dataBinding.inputlayoutDateDeces.error = "Quelle est la date de décès du patient"
                             0
                         }
                     }
@@ -618,21 +608,21 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
 
             1 -> {
 
-                val asymptomatique = dataBinding.radiobuttonAsymptomatiqueOui.isChecked
+                val haveSymptoms = dataBinding.radiobuttonHaveSymptomsOui.isChecked
                 val dateDebutSymptomes = dataBinding.dateDebutSymptomePatient.text.toString()
 
-                user.asymptomatique = asymptomatique
+                user.haveSymptoms = haveSymptoms
 
-                if(!asymptomatique){
+                if(haveSymptoms){
                     if (TextUtils.isEmpty(dateDebutSymptomes)) {
                         isCorrect = false
-                        dataBinding.dateDebutSymptomePatient.error = ""
+                        dataBinding.inputLayoutDateDebutSymptome.error = "la date de début des symptomees doit étre fourni."
                     } else {
                         user.dateDebutSymptomes = try {
                             SimpleDateFormat(DATE_FORMAT).parse(dateDebutSymptomes).time
                         } catch (e: ParseException) {
                             isCorrect = false
-                            dataBinding.dateDebutSymptomePatient.error = ""
+                            dataBinding.inputLayoutDateDebutSymptome.error = "la date de début des symptomees doit étre fourni."
                             0
                         }
                     }
@@ -780,14 +770,14 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
-        dataBinding.radiogroupAsymptomatique.setOnCheckedChangeListener { _, checkedId ->
+        dataBinding.radiogroupHaveSymptoms.setOnCheckedChangeListener { _, checkedId ->
             when(checkedId){
-                R.id.radiobutton_asymptomatique_oui ->{
-                    dataBinding.layoutAllSymptome.visibility = GONE
+                R.id.radiobutton_have_symptoms_oui ->{
+                    dataBinding.layoutAllSymptome.visibility = VISIBLE
                 }
 
-                R.id.radiobutton_asymptomatique_non ->{
-                    dataBinding.layoutAllSymptome.visibility = VISIBLE
+                R.id.radiobutton_have_symptoms_non ->{
+                    dataBinding.layoutAllSymptome.visibility = GONE
                 }
             }
         }
@@ -795,11 +785,11 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
         dataBinding.radiogroupProfessionnelSante.setOnCheckedChangeListener { _, checkedId ->
             when(checkedId){
                 R.id.radiobutton_professionnel_sante_non ->{
-                    dataBinding.layoutProfessionnelDante.visibility = GONE
+                    dataBinding.inputLayoutProfessionnelDante.gone()
                 }
 
                 R.id.radiobutton_professionnel_sante_oui ->{
-                    dataBinding.layoutProfessionnelDante.visibility = VISIBLE
+                    dataBinding.inputLayoutProfessionnelDante.show()
                 }
             }
         }
@@ -837,7 +827,7 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
-        dataBinding.buttonDateDebutSymptome.setOnClickListener {
+        dataBinding.inputLayoutDateDebutSymptome.setEndIconOnClickListener {
             val datePicker = MaterialDatePicker
                     .Builder
                     .datePicker()
@@ -847,7 +837,7 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
                             .setValidator(object : CalendarConstraints.DateValidator {
                                 override fun isValid(date: Long): Boolean {
                                     val isCorrect = date < System.currentTimeMillis()
-                                    dataBinding.dateDebutSymptomePatient.setText(parseDateToString(date, DATE_FORMAT))
+                                    dataBinding.dateDebutSymptomePatient.setText(formatDate(date, DATE_FORMAT))
                                     return isCorrect
                                 }
 
@@ -866,7 +856,7 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
             datePicker.show(childFragmentManager, "DATE_PICKER_DEBUT_SYMPTOMES")
         }
 
-        dataBinding.buttonDateDeces.setOnClickListener {
+        dataBinding.inputLayoutDateDebutSymptome.setOnClickListener {
             val datePicker = MaterialDatePicker
                     .Builder
                     .datePicker()
@@ -876,7 +866,7 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
                             .setValidator(object : CalendarConstraints.DateValidator {
                                 override fun isValid(date: Long): Boolean {
                                     val isCorrect = date < System.currentTimeMillis()
-                                    dataBinding.dateDecesPatient.setText(parseDateToString(date, DATE_FORMAT))
+                                    dataBinding.dateDecesPatient.setText(formatDate(date, DATE_FORMAT))
                                     return isCorrect
                                 }
 
@@ -895,7 +885,7 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
             datePicker.show(childFragmentManager, "DATE_PICKER_DATE_DECES")
         }
 
-        dataBinding.buttonScanCode.setOnClickListener {
+        dataBinding.inputLayoutIdentifiants.setOnClickListener {
             findNavController().navigate(R.id.scanFragment, null, navOptions)
         }
 
@@ -916,9 +906,7 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
                         checkAndSaveUser()
                     }
                 }
-
             }
-
         }
 
         dataBinding.buttonPrevious.setOnClickListener {

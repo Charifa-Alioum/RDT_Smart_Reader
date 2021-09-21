@@ -2,9 +2,11 @@ package cm.seeds.rdtsmartreader.data
 
 import androidx.room.TypeConverter
 import cm.seeds.rdtsmartreader.modeles.Coordonnee
+import cm.seeds.rdtsmartreader.modeles.Page
 import cm.seeds.rdtsmartreader.modeles.Test
 import cm.seeds.rdtsmartreader.modeles.User
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Converter {
 
@@ -27,6 +29,19 @@ class Converter {
         @JvmStatic
         fun fromCoordonneeToString(coordonnee: Coordonnee) : String{
             return Gson().toJson(coordonnee)
+        }
+
+        @TypeConverter
+        @JvmStatic
+        fun fromStringToListPage(string: String?) : MutableList<Page>?{
+            val type = object : TypeToken<List<Page?>?>() {}.type
+            return Gson().fromJson(string,type)
+        }
+
+        @TypeConverter
+        @JvmStatic
+        fun fromListPageToString(pages: MutableList<Page>?) : String?{
+            return Gson().toJson(pages)
         }
 
 

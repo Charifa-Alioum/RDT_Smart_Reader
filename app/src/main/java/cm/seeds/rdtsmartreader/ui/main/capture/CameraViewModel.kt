@@ -2,19 +2,25 @@ package cm.seeds.rdtsmartreader.ui.main.capture
 
 import android.app.Application
 import androidx.lifecycle.*
+import cm.seeds.rdtsmartreader.data.AppDatabase
 import cm.seeds.rdtsmartreader.helper.*
+import cm.seeds.rdtsmartreader.modeles.Image
 import cm.seeds.retrofitrequestandnavigation.retrofit.RequestResult.Companion.error
 import cm.seeds.retrofitrequestandnavigation.retrofit.RequestResult.Companion.loading
 import cm.seeds.retrofitrequestandnavigation.retrofit.RequestResult.Companion.success
 import cm.seeds.retrofitrequestandnavigation.retrofit.RequestResult
 import kotlinx.coroutines.launch
+import java.io.File
 
 class CameraViewModel(application: Application) : ViewModel() {
 
+    var dao = AppDatabase.database(application).getDao()
     var liveDataImagePath = MutableLiveData<Any>("")
-
+    var recogniseText = MutableLiveData<List<String?>?>()
     var resultOfScan : MutableLiveData<RequestResult<Any?>> = MutableLiveData()
     private val pythonMod = PythonMod.getPythonMod(application)
+
+    var saveImages = dao.getImages()
 
     fun scanAndHandleResult(imagePath : Any){
 
@@ -26,15 +32,21 @@ class CameraViewModel(application: Application) : ViewModel() {
 
                 if(imagePath is String){
 
-                    val preprocessBitmap = pythonMod.preproccessImage(imagePath)
+                    val preprocessBitmaps = pythonMod.preproccessImage(imagePath)
 
-                    if(preprocessBitmap!=null){
+                    if(!preprocessBitmaps.isNullOrEmpty()){
 
-                        resultOfScan.value = loading("Traitement en cours",preprocessBitmap)
+                        resultOfScan.value = loading("Traitement en cours",preprocessBitmaps[0])
 
-                        val category = pythonMod.identify(preprocessBitmap)
+                        if(preprocessBitmaps[0]!=null){
+                            val category = pythonMod.identify(preprocessBitmaps[0]!!)
+                            val label = pythonMod.getLabelOfCategory(category)
+                            resultOfScan.value = success(label)
 
-                        resultOfScan.value = success(pythonMod.getLabelOfCategory(category))
+                            viewModelScope.launch {
+                                dao.saveImages(listOf(Image(filePath = imagePath,name = imagePath,result = label)))
+                            }
+                        }
 
                     }else{
 

@@ -113,13 +113,17 @@
                                 android:gravity="center_vertical">
 
                                 <com.google.android.material.textfield.TextInputLayout
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:id="@+id/input_layout_identifiants"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:layout_marginTop="@dimen/quater_fab_margin"
                                     android:layout_marginBottom="@dimen/quater_fab_margin"
                                     android:hint="@string/identifiants"
+                                    app:endIconMode="custom"
+                                    app:endIconDrawable="@drawable/ic_round_qr_code_scanner_24"
+                                    app:endIconTint="@color/color_accent"
                                     app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Caption">
 
                                     <com.google.android.material.textfield.TextInputEditText
@@ -134,19 +138,10 @@
 
                                 </com.google.android.material.textfield.TextInputLayout>
 
-                                <ImageButton
-                                    android:id="@+id/button_scan_code"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_round_qr_code_scanner_24"
-                                    android:tint="@color/color_accent"
-                                    android:background="@drawable/button_round_background"
-                                    android:padding="@dimen/semi_fab_margin"
-                                    android:layout_margin="@dimen/quater_fab_margin"/>
-
                             </LinearLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/input_layout_nom_patient"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -167,6 +162,7 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/input_layout_profession_patient"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -187,11 +183,10 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/input_layout_domicile_patient"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                 android:layout_width="match_parent"
                                 app:counterMaxLength="25"
-                                android:layout_marginEnd="@dimen/quater_fab_margin"
-                                android:layout_weight="3"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/domicile">
 
@@ -208,10 +203,10 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/input_layout_region_patient"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/semi_fab_margin"
                                 android:layout_marginTop="@dimen/quater_fab_margin"
                                 android:layout_marginBottom="@dimen/quater_fab_margin"
                                 android:hint="@string/region">
@@ -236,6 +231,7 @@
                                 android:orientation="horizontal">
 
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/input_layout_disctrict_patient"
                                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
@@ -257,6 +253,7 @@
                                 </com.google.android.material.textfield.TextInputLayout>
 
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/input_layout_airesante_patient"
                                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
@@ -281,6 +278,7 @@
                             </LinearLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/input_layout_telephone_patient"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -300,6 +298,7 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/input_layout_genre_patient"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -326,6 +325,7 @@
                                 android:orientation="horizontal">
 
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/input_layout_age_patient"
                                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
@@ -421,7 +421,7 @@
                                 </LinearLayout>
 
                                 <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/layout_professionnel_dante"
+                                    android:id="@+id/input_layout_professionnel_dante"
                                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                     android:layout_width="match_parent"
                                     android:visibility="gone"
@@ -493,6 +493,7 @@
                                 android:orientation="horizontal">
 
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/inputlayout_date_deces"
                                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
@@ -500,13 +501,15 @@
                                     android:visibility="visible"
                                     android:layout_marginTop="@dimen/quater_fab_margin"
                                     android:layout_marginBottom="@dimen/quater_fab_margin"
-                                    android:hint="@string/date_deces">
+                                    android:hint="@string/date_deces"
+                                    app:endIconTint="@color/color_accent"
+                                    app:endIconDrawable="@drawable/ic_round_calendar_today_24"
+                                    app:endIconMode="custom">
 
                                     <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/date_deces_patient"
                                         android:layout_width="match_parent"
                                         android:enabled="false"
-                                        android:editable="false"
                                         android:focusable="false"
                                         android:layout_height="wrap_content"
                                         android:imeOptions="actionDone"
@@ -514,15 +517,6 @@
                                         android:selectAllOnFocus="true" />
 
                                 </com.google.android.material.textfield.TextInputLayout>
-
-                                <ImageButton
-                                    android:id="@+id/button_date_deces"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_round_calendar_today_24"
-                                    android:tint="@color/color_accent"
-                                    android:padding="@dimen/semi_fab_margin"
-                                    android:background="@drawable/button_round_background"/>
 
                             </LinearLayout>
 
@@ -560,14 +554,14 @@
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
                                 <RadioGroup
-                                    android:id="@+id/radiogroup_asymptomatique"
+                                    android:id="@+id/radiogroup_have_symptoms"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:layout_marginStart="@dimen/fab_margin">
 
                                     <com.google.android.material.radiobutton.MaterialRadioButton
-                                        android:id="@+id/radiobutton_asymptomatique_oui"
+                                        android:id="@+id/radiobutton_have_symptoms_oui"
                                         android:layout_width="wrap_content"
                                         android:layout_marginStart="@dimen/semi_fab_margin"
                                         android:layout_marginEnd="@dimen/semi_fab_margin"
@@ -577,7 +571,7 @@
                                         android:text="@string/oui"/>
 
                                     <com.google.android.material.radiobutton.MaterialRadioButton
-                                        android:id="@+id/radiobutton_asymptomatique_non"
+                                        android:id="@+id/radiobutton_have_symptoms_non"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
@@ -604,6 +598,7 @@
                                     android:orientation="horizontal">
 
                                     <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/input_layout_date_debut_symptome"
                                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                         android:layout_width="0dp"
                                         android:layout_weight="1"
@@ -611,7 +606,10 @@
                                         android:visibility="visible"
                                         android:layout_marginTop="@dimen/quater_fab_margin"
                                         android:layout_marginBottom="@dimen/quater_fab_margin"
-                                        android:hint="@string/date_debut_symptome">
+                                        android:hint="@string/date_debut_symptome"
+                                        app:endIconMode="custom"
+                                        app:endIconDrawable="@drawable/ic_round_calendar_today_24"
+                                        app:endIconTint="@color/color_accent">
 
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/date_debut_symptome_patient"
@@ -619,21 +617,11 @@
                                             android:layout_height="wrap_content"
                                             android:enabled="false"
                                             android:focusable="false"
-                                            android:editable="false"
                                             android:imeOptions="actionDone"
                                             android:inputType="date"
                                             android:selectAllOnFocus="true" />
 
                                     </com.google.android.material.textfield.TextInputLayout>
-
-                                    <ImageButton
-                                        android:id="@+id/button_date_debut_symptome"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_round_calendar_today_24"
-                                        android:tint="@color/color_accent"
-                                        android:padding="@dimen/semi_fab_margin"
-                                        android:background="@drawable/button_round_background"/>
 
                                 </LinearLayout>
 
@@ -1096,19 +1084,23 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="wrap_content"
                         android:enabled="false"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:textAllCaps="true"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/quater_fab_margin"
-                        android:text="@string/precedent" />
+                        android:text="@string/precedent"
+                        app:cornerRadius="@dimen/semi_fab_margin"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_next"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="wrap_content"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/quater_fab_margin"
-                        android:text="@string/enregistrer" />
+                        android:text="@string/enregistrer"
+                        app:cornerRadius="@dimen/semi_fab_margin"/>
 
 
                 </LinearLayout>

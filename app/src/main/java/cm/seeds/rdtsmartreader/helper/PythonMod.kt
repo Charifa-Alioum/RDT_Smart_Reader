@@ -3,11 +3,14 @@ package cm.seeds.rdtsmartreader.helper
 import android.app.Application
 import android.content.Context
 import android.graphics.*
+import android.util.Log
 import cm.seeds.rdtsmartreader.imagedecoder.Classifier
 import cm.seeds.rdtsmartreader.imagedecoder.Classifier.Recognition
+import cm.seeds.rdtsmartreader.imagedecoder.TessOCR
 import cm.seeds.rdtsmartreader.imagedecoder.YoloV5Classifier
 import cm.seeds.rdtsmartreader.imagedecoder.env.ImageUtils
 import cm.seeds.rdtsmartreader.imagedecoder.env.Utils
+import cm.seeds.rdtsmartreader.modeles.Test
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
@@ -17,13 +20,17 @@ import java.io.IOException
 import kotlin.math.abs
 import kotlin.math.min
 
+
 class PythonMod() {
 
     private var classifier : Classifier? = null
     private var application : Application? = null
     private var preprocessingMod : PyObject? = null
+    private var tessOCR : TessOCR? = null
 
     private constructor(application: Application) : this(){
+
+        tessOCR = TessOCR(application, "eng")
 
         classifier = getClassifier(application)
 
@@ -64,13 +71,19 @@ class PythonMod() {
 
         return when(category){
 
-            -1 -> CONCLUSION_INDETERMINE
+            //-1 -> CONCLUSION_INDETERMINE
 
-            0 -> CONCLUSION_NEGATIF
+            CATEGORY_NEGATIVE -> CONCLUSION_NEGATIF
 
-            1 -> CONCLUSION_POSITIF
+            CATEGORY_POSITIVE -> CONCLUSION_POSITIF
 
-            2 -> CONCLUSION_INVALIDE
+            CATEGORY_INVALID -> CONCLUSION_INVALIDE
+
+            CATEGORY_POSTIVE_AGENT_ONE -> CONCLUSION_POSITIVE_AGENT_ONE
+
+            CATEGORY_POSTIVE_AGENT_TWO -> CONCLUSION_POSITIVE_AGENT_TWO
+
+            CATEGORY_POSTIVE_BOTH_AGENT -> CONCLUSION_POSITIVE_BOTH_AGENT
 
             else -> CONCLUSION_INDETERMINE
 
@@ -133,16 +146,26 @@ class PythonMod() {
      * Algorithme de pretraitement de l'image
      * @return une bitmap représentant l'image traité
      */
-    suspend fun preproccessImage(imagePath: String) : Bitmap?{
+    suspend fun preproccessImage(imagePath: String) : List<Bitmap?>{
+
         return withContext(Dispatchers.IO){
-            val bytes = preprocessingMod?.callAttr("preprocess", imagePath)?.toJava(ByteArray::class.java)
-            if(bytes!=null){
-                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-            }else{
-                null
+            try {
+                val bytes : List<PyObject>? = preprocessingMod?.callAttr("preprocess", imagePath)?.asList()
+
+                val cropBytes = bytes?.get(0)?.toJava(ByteArray::class.java)
+                val part1Bytes = bytes?.get(1)?.toJava(ByteArray::class.java)
+                val part2Bytes = bytes?.get(2)?.toJava(ByteArray::class.java)
+
+                val cropBitmap = BitmapFactory.decodeByteArray(cropBytes, 0, cropBytes?.size?:0)
+                val part1Bitmap = BitmapFactory.decodeByteArray(part1Bytes, 0, part1Bytes?.size?:0)
+                val part2Bitmap = BitmapFactory.decodeByteArray(part2Bytes, 0, part2Bytes?.size?:0)
+
+                mutableListOf(cropBitmap,part1Bitmap,part2Bitmap)
+            }catch(e : Exception){
+                Log.e("TAG","Impossible de traiter l'image recu")
+                mutableListOf<Bitmap>()
             }
         }
-
     }
 
 
@@ -168,28 +191,8 @@ class PythonMod() {
 
 
                 results?.let {
-
                     category = classifyTDR(it)
-
-
-
-                    /*for (result in results) {
-                        val location = result?.getLocation()
-                        if (location != null && result.confidence!! >= MINIMUM_CONFIDENCE_TF_OD_API) {
-                            //
-                            if (result.title == LINE) {
-                                lines++
-                            }
-                            if (result.title == TRIANGLE) {
-                                triangles++
-                            }
-                            canvas.drawRect(location, paint)
-                        }
-                    }*/
-
                 }
-
-                //tv.setText("lines: " + lines + ", triangles: " + triangles);
             }
 
             category
@@ -201,10 +204,9 @@ class PythonMod() {
      * Algorithme de classification du résultat de l'anlyse du nombre de ligne et de triangle du TDR
      *
      */
-    fun classifyTDR(objects: List<Recognition?>) : Int{
+    fun classifyTDR(objects: List<Recognition?>, vararg detectedString: String) : Int{
 
         var category = -1 // Default category
-
 
         val CATEGORY_INVALID = 2
         val CATEGORY_POSITIVE = 1
@@ -237,7 +239,7 @@ class PythonMod() {
         val nbLines: Int = lines.size // Le nombre de lignes detectees
 
 
-        // Case of 2 lines-RDT
+/*        // Case of 2 lines-RDT
         when(triangles.size){
 
             0 -> {
@@ -335,14 +337,27 @@ class PythonMod() {
 
                     3 -> category =
                         CATEGORY_POSITIVE // means all attempted lines are present, then 'positive'
-
                 }
             }
 
         }
 
-        return category
+        return category*/
 
+        return Test.setResult(nbLines,triangles.size,lines,triangles)
+
+    }
+
+
+    /**
+     * Méthode qui détecte les chaines de carractères présentes sur une image
+     */
+    fun getTextOnImage(bitmap: Bitmap?): String? {
+        return if(bitmap!=null){
+            tessOCR?.getOCRResult(bitmap)
+        }else{
+            null
+        }
     }
 
 }

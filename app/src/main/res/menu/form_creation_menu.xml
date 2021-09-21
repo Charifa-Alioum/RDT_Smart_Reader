@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_save_form"
+        android:title="Sauvegarder"
+        android:icon="@drawable/ic_round_save_24"
+        android:iconTint="?android:attr/colorForeground"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_preview_form"
+        android:title="Visualiser"
+        android:icon="@drawable/ic_round_visibility_24"
+        android:iconTint="?android:attr/colorForeground"
+        app:showAsAction="ifRoom"/>
+
+
+</menu>

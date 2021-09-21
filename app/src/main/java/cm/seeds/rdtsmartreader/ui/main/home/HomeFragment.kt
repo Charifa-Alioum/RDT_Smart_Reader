@@ -17,34 +17,43 @@ import androidx.navigation.fragment.findNavController
 import cm.seeds.rdtsmartreader.R
 import cm.seeds.rdtsmartreader.data.ViewModelFactory
 import cm.seeds.rdtsmartreader.databinding.FragmentHomeBinding
+import cm.seeds.rdtsmartreader.helper.ServerListener
 import cm.seeds.rdtsmartreader.helper.navOptions
 import cm.seeds.rdtsmartreader.service.Server
+import cm.seeds.rdtsmartreader.ui.MainViewModel
 import cm.seeds.rdtsmartreader.ui.main.informations.InformationsFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var dataBinding : FragmentHomeBinding
-
-    private var isConnected = false
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var dataBinding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.explode)
-        sharedElementReturnTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.explode)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.explode)
+        sharedElementReturnTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.explode)
 
-        homeViewModel = ViewModelProvider(this, ViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProvider(this, ViewModelFactory(requireActivity().application)).get(
+                HomeViewModel::class.java
+            )
+
+        mainViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(requireActivity().application)).get(
+                MainViewModel::class.java
+            )
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
 
-        dataBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         return dataBinding.root
     }
@@ -59,27 +68,48 @@ class HomeFragment : Fragment() {
 
     private fun attachObservers() {
 
+        mainViewModel.serverState.observe(viewLifecycleOwner,{
+            if(it!=null){
+                when(it.state){
+                    ServerListener.State.CONNECTED -> {
+                        dataBinding.stateConnexionDispositif.text = "Connecté au dispositif"
+                    }
+                    ServerListener.State.LAUNCHED -> {
+                        dataBinding.stateConnexionDispositif.text = "Serveur lancé"
+                    }
+                    ServerListener.State.STOPPED -> {
+                        dataBinding.stateConnexionDispositif.text = "Non connecté au dispositif"
+                    }
+                }
+            }else{
+                dataBinding.stateConnexionDispositif.text = "Non connecté au dispositif"
+            }
+        })
 
         homeViewModel.allUsers.observe(viewLifecycleOwner, {
 
 
             dataBinding.textviewNombreTest.text = "${it.size} \n ${getString(R.string.testes)}"
 
-            val numberPositif = it.count { user -> user.test?.conclusion.equals(getString(R.string.positif),true) }
+            val numberPositif =
+                it.count { user -> user.test?.conclusion.equals(getString(R.string.positif), true) }
 
-            val numberNegatif = it.count { user -> user.test?.conclusion.equals(getString(R.string.negatif),true) }
+            val numberNegatif =
+                it.count { user -> user.test?.conclusion.equals(getString(R.string.negatif), true) }
 
-            dataBinding.textviewNombreTestNegatifs.text = "$numberNegatif \n ${getString(R.string.negatifs)}"
+            dataBinding.textviewNombreTestNegatifs.text =
+                "$numberNegatif \n ${getString(R.string.negatifs)}"
 
-            dataBinding.textviewNombreTestPositifs.text = "$numberPositif \n ${getString(R.string.positifs)}"
+            dataBinding.textviewNombreTestPositifs.text =
+                "$numberPositif \n ${getString(R.string.positifs)}"
 
 
-            val numberNotSync =  it.count { item -> !item.synchronised }
+            val numberNotSync = it.count { item -> !item.synchronised }
             dataBinding.textNumbersItemNotSync.text = numberNotSync.toString()
 
-            if(numberNotSync <= 0){
+            if (numberNotSync <= 0) {
                 dataBinding.layoutNotSyncInformations.visibility = GONE
-            }else{
+            } else {
                 dataBinding.layoutNotSyncInformations.visibility = VISIBLE
             }
 
@@ -90,17 +120,9 @@ class HomeFragment : Fragment() {
     private fun addActionsOnViews() {
 
         dataBinding.buttonConnectToServer.setOnClickListener {
-            if(isConnected){
-                requireContext().startService(Intent(requireContext(),Server::class.java).apply {
-                    action = Server.ACTION_DISCONNECT_TO_SERVER
-                })
-                isConnected = false
-            }else{
-                requireContext().startService(Intent(requireContext(), Server::class.java).apply {
-                    action = Server.ACTION_CONNECT_TO_SERVER
-                })
-                isConnected = true
-            }
+            requireContext().startService(Intent(requireContext(), Server::class.java).apply {
+                action = Server.TOGGLE_CONNECTION_DECONNEXION
+            })
         }
 
         dataBinding.layoutAllTest.setOnClickListener {
@@ -108,17 +130,23 @@ class HomeFragment : Fragment() {
                 dataBinding.layoutAllTest to dataBinding.layoutAllTest.transitionName
             )
 
-            findNavController().navigate(R.id.informationsFragment,Bundle().apply {
-                putInt(InformationsFragment.TYPE_DATA_TO_SHOW,InformationsFragment.TYPE_OF_DATA_ALL_TEST)
-            },null, navExtras)
+            findNavController().navigate(R.id.informationsFragment, Bundle().apply {
+                putInt(
+                    InformationsFragment.TYPE_DATA_TO_SHOW,
+                    InformationsFragment.TYPE_OF_DATA_ALL_TEST
+                )
+            }, null, navExtras)
         }
 
         dataBinding.layoutPostiveTests.setOnClickListener {
             val navExtras = FragmentNavigatorExtras(
                 dataBinding.layoutPostiveTests to dataBinding.layoutPostiveTests.transitionName
             )
-            findNavController().navigate(R.id.informationsFragment,Bundle().apply {
-                putInt(InformationsFragment.TYPE_DATA_TO_SHOW,InformationsFragment.TYPE_OF_DATA_POSITIVE_TEST)
+            findNavController().navigate(R.id.informationsFragment, Bundle().apply {
+                putInt(
+                    InformationsFragment.TYPE_DATA_TO_SHOW,
+                    InformationsFragment.TYPE_OF_DATA_POSITIVE_TEST
+                )
             }, null, navExtras)
         }
 
@@ -126,35 +154,43 @@ class HomeFragment : Fragment() {
             val navExtras = FragmentNavigatorExtras(
                 dataBinding.layoutNegativeTest to dataBinding.layoutNegativeTest.transitionName
             )
-            findNavController().navigate(R.id.informationsFragment,Bundle().apply {
-                putInt(InformationsFragment.TYPE_DATA_TO_SHOW,InformationsFragment.TYPE_OF_DATA_NEGATIVE_TEST)
+            findNavController().navigate(R.id.informationsFragment, Bundle().apply {
+                putInt(
+                    InformationsFragment.TYPE_DATA_TO_SHOW,
+                    InformationsFragment.TYPE_OF_DATA_NEGATIVE_TEST
+                )
             }, null, navExtras)
         }
 
         dataBinding.buttonMoreAction.setOnClickListener {
-            if(dataBinding.buttonCapture.isVisible){
-                rotateFab(dataBinding.buttonMoreAction,false)
+            if (dataBinding.buttonCapture.isVisible) {
+                rotateFab(dataBinding.buttonMoreAction, false)
                 dataBinding.buttonCapture.hide()
                 dataBinding.buttonScan.hide()
-            }else{
-                rotateFab(dataBinding.buttonMoreAction,true)
+            } else {
+                rotateFab(dataBinding.buttonMoreAction, true)
                 dataBinding.buttonCapture.show()
                 dataBinding.buttonScan.show()
             }
         }
 
         dataBinding.buttonCapture.setOnClickListener {
-            findNavController().navigate(R.id.cameraFragment,null, navOptions)
+            findNavController().navigate(R.id.cameraFragment, null, navOptions)
         }
 
         dataBinding.buttonScan.setOnClickListener {
             findNavController().navigate(R.id.scanFragment, null, navOptions)
         }
 
+        dataBinding.buttonSync.setOnClickListener {
+            mainViewModel.synchronise()
+        }
+
     }
 
 
-    private fun rotateFab(fab : FloatingActionButton, shouldRotate : Boolean){
-        fab.animate().setDuration(200).rotation(if(shouldRotate) 135f else 0f)
+    private fun rotateFab(fab: FloatingActionButton, shouldRotate: Boolean) {
+        fab.animate().setDuration(200).rotation(if (shouldRotate) 135f else 0f)
     }
+
 }

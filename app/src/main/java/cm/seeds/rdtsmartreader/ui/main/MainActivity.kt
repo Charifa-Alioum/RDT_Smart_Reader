@@ -2,12 +2,14 @@ package cm.seeds.rdtsmartreader.ui.main
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.DialogInterface
+import android.app.Dialog
+import android.content.*
 import android.content.pm.PackageManager
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.IBinder
+import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -18,15 +20,73 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import cm.seeds.rdtsmartreader.R
+import cm.seeds.rdtsmartreader.data.Status
 import cm.seeds.rdtsmartreader.data.ViewModelFactory
+import cm.seeds.rdtsmartreader.databinding.LayoutSynchronisationBinding
 import cm.seeds.rdtsmartreader.helper.*
 import cm.seeds.rdtsmartreader.modeles.Coordonnee
-import cm.seeds.rdtsmartreader.ui.main.informations.InformationsViewModel
+import cm.seeds.rdtsmartreader.service.Server
+import cm.seeds.rdtsmartreader.ui.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var informationsViewModel : InformationsViewModel
+    private lateinit var synchronisationDialog : Dialog
+    private lateinit var synchronisationDataBinding : LayoutSynchronisationBinding
+
+    private lateinit var mainViewModel : MainViewModel
     private var locationManager : LocationManager? = null
+    private var server : Server? = null
+    private var connectionLoadingDialog : Dialog? = null
+    private val serverListener = object : ServerListener {
+        override fun onServerStateChange(newState: ServerListener.State) {
+            runOnUiThread {
+                mainViewModel.serverState.value = mainViewModel.serverState.value?.apply {
+                    state = newState
+                }
+                when(newState){
+                    ServerListener.State.CONNECTED -> {
+                        connectionLoadingDialog?.dismiss()
+                        showToast(this@MainActivity, "connecté au dispositif")
+                    }
+                    ServerListener.State.LAUNCHED -> {
+                        connectionLoadingDialog?.dismiss()
+                        showToast(this@MainActivity, "Serveur lancé")
+                    }
+                    ServerListener.State.STOPPED -> {
+                        connectionLoadingDialog?.dismiss()
+                        showToast(this@MainActivity,"Dispositif arrété, ou impossible de se concnecter")
+                    }
+                    ServerListener.State.CONNECTING -> {
+                        connectionLoadingDialog?.show()
+                    }
+                }
+            }
+        }
+    }
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            val binder = service as Server.LocalBinder
+            server = binder.getService()
+            server?.setListener(serverListener)
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            server = null
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Intent(this, Server::class.java).also { intent ->
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+    override fun onStop() {
+        unbindService(connection)
+        super.onStop()
+    }
 
     private val locationListener = LocationListener { location ->
         val latitude = location.latitude
@@ -40,13 +100,63 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        informationsViewModel = ViewModelProvider(this, ViewModelFactory(application)).get(InformationsViewModel::class.java)
+        initLoadingDialog()
+
+        mainViewModel = ViewModelProvider(this, ViewModelFactory(application)).get(MainViewModel::class.java)
 
         setContentView(R.layout.activity_main)
 
         setupNavController()
 
+        attachObserevers()
+
+        setupSynchronisationDialog()
+
         //prepareAndGetLocalisation()
+    }
+
+    private fun initLoadingDialog() {
+        connectionLoadingDialog = getLoadingDialog(this)
+    }
+
+    private fun setupSynchronisationDialog() {
+        synchronisationDialog = Dialog(this)
+        synchronisationDataBinding = LayoutSynchronisationBinding.inflate(LayoutInflater.from(synchronisationDialog.context))
+        synchronisationDialog.setContentView(synchronisationDataBinding.root)
+        synchronisationDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        synchronisationDialog.setCancelable(false)
+    }
+
+    private fun attachObserevers() {
+        mainViewModel.synchronisationStatusLiveData.observe(this,{
+
+            when(it.status){
+
+                Status.LOADING ->{
+                    if(!synchronisationDialog.isShowing){
+                        synchronisationDialog.show()
+                    }
+
+                    if(it.data!=null){
+                        val progress = it.data.userSynched.toFloat() / it.data.userToSynch.toFloat()
+                        synchronisationDataBinding.progressHorizontal.progress = (progress * 100).toInt()
+                        synchronisationDataBinding.texviewNumberSynched.text = it.data.userSynched.toString()
+                        synchronisationDataBinding.texviewNumberToSynch.text = it.data.userToSynch.toString()
+                    }
+                }
+
+                Status.ERROR ->{
+
+                    synchronisationDialog.dismiss()
+                    showMessage(this@MainActivity,"ERROR",it.message)
+                }
+
+                Status.SUCCESS -> {
+                    synchronisationDialog.dismiss()
+                    showToast(this@MainActivity, "Synchronisation Terminée")
+                }
+            }
+        })
     }
 
     override fun onResume() {
@@ -164,7 +274,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.cameraFragment ->{
-                    navView.visibility = GONE
+                    //navView.visibility = GONE
                 }
 
                 R.id.scanFragment ->{

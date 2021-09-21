@@ -3,12 +3,12 @@ buildscript {
     ext.kotlin_version = "1.4.21"
 
     ext{
-        lifecycle_version = "2.2.0"
+        lifecycle_version = "2.3.1"
         retrofit_version = "2.7.2"
-        room_version = "2.2.6"
+        room_version = "2.3.0"
         paging_version = '3.0.0-alpha11'
         work_version = "2.4.0"
-        navigation_version = "2.3.3"
+        navigation_version = "2.3.5"
         preference_version = "1.1.1"
     }
 

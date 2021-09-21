@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -18,7 +19,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RDTSmartReader"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.camera.CameraActivity"></activity>
+        <activity android:name=".ui.form.form_preview.FormPreviewActivity"></activity>
+        <activity android:name=".ui.form.all_form.AllFormActivity" />
+        <activity android:name=".ui.form.form_edition.FormCreationActivity" />
+        <activity android:name=".ui.camera.CameraActivity" />
 
         <service
             android:name=".service.Server"

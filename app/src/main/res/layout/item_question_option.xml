@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/fab_margin"
+        android:paddingEnd="@dimen/fab_margin"
+        android:paddingTop="@dimen/semi_fab_margin"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/semi_fab_margin">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/option_label"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:imeOptions="actionDone"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/semi_fab_margin"
+            android:text="Option 1"/>
+
+        <ImageButton
+            android:id="@+id/action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_round_close_24"
+            android:tint="?android:attr/colorForeground"
+            android:background="@drawable/button_round_background"
+            android:padding="@dimen/semi_fab_margin"/>
+
+    </LinearLayout>
+
+</layout>

@@ -20,16 +20,15 @@ import cm.seeds.rdtsmartreader.databinding.FragmentInformationsBinding
 import cm.seeds.rdtsmartreader.databinding.LayoutSynchronisationBinding
 import cm.seeds.rdtsmartreader.helper.*
 import cm.seeds.rdtsmartreader.modeles.User
+import cm.seeds.rdtsmartreader.ui.MainViewModel
 
 class InformationsFragment : Fragment() {
 
     private lateinit var informationsViewModel: InformationsViewModel
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var dataBinding : FragmentInformationsBinding
     private lateinit var userAdapter: UserAdapter
     private var typeOfData = TYPE_OF_DATA_ALL_TEST
-
-    private lateinit var synchronisationDialog : Dialog
-    private lateinit var synchronisationDataBinding : LayoutSynchronisationBinding
 
     private var paramAlreadyUsed = false
 
@@ -50,21 +49,11 @@ class InformationsFragment : Fragment() {
         sharedElementReturnTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.explode)
 
         informationsViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(requireActivity().application)).get(InformationsViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(requireActivity().application)).get(MainViewModel::class.java)
 
         arguments?.let {
             typeOfData = it.getInt(TYPE_DATA_TO_SHOW, TYPE_OF_DATA_ALL_TEST)
         }
-
-        setupSynchronisationDialog()
-
-    }
-
-    private fun setupSynchronisationDialog() {
-        synchronisationDialog = Dialog(requireContext())
-        synchronisationDataBinding = LayoutSynchronisationBinding.inflate(LayoutInflater.from(synchronisationDialog.context))
-        synchronisationDialog.setContentView(synchronisationDataBinding.root)
-        synchronisationDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        synchronisationDialog.setCancelable(false)
 
     }
 
@@ -93,7 +82,7 @@ class InformationsFragment : Fragment() {
 
     private fun setupRecyclerViews() {
         userAdapter = UserAdapter(object : ToDoOnClick{
-            override fun onItemClick(item: Any, position: Int) {
+            override fun onItemClick(item: Any, position: Int, view: View) {
                 informationsViewModel.userToSave.value = item as User
                 openBottomSheet()
             }
@@ -106,7 +95,7 @@ class InformationsFragment : Fragment() {
 
     private fun addObservers() {
 
-        informationsViewModel.allUsers.observe(viewLifecycleOwner, {
+        mainViewModel.allUsers.observe(viewLifecycleOwner, {
 
             val numbersPersonnesSync = it.count { item -> item.synchronised }
             val numbersPersonnesNotSync = it.count { item -> !item.synchronised }
@@ -153,40 +142,6 @@ class InformationsFragment : Fragment() {
         })
 
 
-        informationsViewModel.synchronisationStatusLiveData.observe(viewLifecycleOwner,{
-
-            when(it.status){
-
-                Status.LOADING ->{
-                    if(!synchronisationDialog.isShowing){
-                        synchronisationDialog.show()
-                    }
-
-                    if(it.data!=null){
-                        val progress = it.data.userSynched.toFloat() / it.data.userToSynch.toFloat()
-                        synchronisationDataBinding.progressHorizontal.progress = (progress * 100).toInt()
-                        synchronisationDataBinding.texviewNumberSynched.text = it.data.userSynched.toString()
-                        synchronisationDataBinding.texviewNumberToSynch.text = it.data.userToSynch.toString()
-                    }
-                }
-
-                Status.ERROR ->{
-
-                    synchronisationDialog.dismiss()
-                    showMessage(requireContext(),"ERROR",it.message)
-                }
-
-                Status.SUCCESS -> {
-
-                    synchronisationDialog.dismiss()
-                    showToast(requireContext(), "Synchronisation Terminée")
-
-                }
-
-            }
-
-        })
-
     }
 
     private fun addActionsonViews() {
@@ -195,7 +150,7 @@ class InformationsFragment : Fragment() {
         }
 
         dataBinding.buttonSynchronise.setOnClickListener {
-            informationsViewModel.synchronise()
+            mainViewModel.synchronise()
         }
 
         dataBinding.backButton.setOnClickListener {
@@ -203,23 +158,23 @@ class InformationsFragment : Fragment() {
         }
 
         dataBinding.layoutAllNotSyncUsers.setOnClickListener {
-            userAdapter.submitList(informationsViewModel.allUsers.value?.filter { item -> !item.synchronised })
+            userAdapter.submitList(mainViewModel.allUsers.value?.filter { item -> !item.synchronised })
         }
 
         dataBinding.layoutAllSyncUsers.setOnClickListener {
-            userAdapter.submitList(informationsViewModel.allUsers.value?.filter { item -> item.synchronised })
+            userAdapter.submitList(mainViewModel.allUsers.value?.filter { item -> item.synchronised })
         }
 
         dataBinding.layoutAllNegatifsUsers.setOnClickListener {
-            userAdapter.submitList(informationsViewModel.allUsers.value?.filter { item -> item.test?.conclusion == CONCLUSION_NEGATIF })
+            userAdapter.submitList(mainViewModel.allUsers.value?.filter { item -> item.test?.conclusion == CONCLUSION_NEGATIF })
         }
 
         dataBinding.layoutAllPositifsUsers.setOnClickListener {
-            userAdapter.submitList(informationsViewModel.allUsers.value?.filter { item -> item.test?.conclusion == CONCLUSION_POSITIF })
+            userAdapter.submitList(mainViewModel.allUsers.value?.filter { item -> item.test?.conclusion == CONCLUSION_POSITIF })
         }
 
         dataBinding.layoutAllUsers.setOnClickListener {
-            userAdapter.submitList(informationsViewModel.allUsers.value)
+            userAdapter.submitList(mainViewModel.allUsers.value)
         }
 
     }

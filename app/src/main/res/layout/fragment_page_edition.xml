@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_page_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/semi_fab_margin"
+                android:layout_marginEnd="@dimen/semi_fab_margin"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingStart="@dimen/semi_fab_margin"
+                android:paddingEnd="@dimen/semi_fab_margin"
+                android:orientation="vertical"
+                android:background="@drawable/background_page_details"
+                android:elevation="@dimen/semi_fab_margin"
+                android:animateLayoutChanges="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:alpha=".6"
+                    android:text="@string/details_de_la_page"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/semi_fab_margin"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_page_details_fields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/semi_fab_margin"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:hint="@string/nom_de_la_page">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edittext_page_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/semi_fab_margin"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:hint="@string/description_de_la_page">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edittext_page_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/buttton_show_page_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_round_keyboard_arrow_down_24"
+                    android:padding="@dimen/semi_fab_margin"
+                    android:background="@drawable/button_round_background"
+                    android:tint="?android:attr/colorForeground"
+                    android:alpha=".7"
+                    android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_questions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:listitem="@layout/item_question"
+                tools:itemCount="2"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_add_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:borderWidth="0dp"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_round_add_24"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>

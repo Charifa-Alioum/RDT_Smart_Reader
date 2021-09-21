@@ -29,9 +29,9 @@ android {
                 install "pillow"
             }
 
-/*            buildPython "C:\\Users\\ASUS\\AppData\\Local\\Programs\\Python\\Python38\\python.exe"
+            buildPython "C:\\Users\\ASUS\\anaconda3\\python.exe"
 
-            buildPython "C:\\Users\\ASUS\\AppData\\Local\\Programs\\Python\\Python38\\python.exe", "-3.8"*/
+            //buildPython "C:\\Users\\ASUS\\AppData\\Local\\Programs\\Python\\Python38\\python.exe", "-3.8"*/
         }
     }
 
@@ -77,9 +77,12 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
 
     //LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -94,8 +97,10 @@ dependencies {
     //Room dependency
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
-    implementation 'androidx.preference:preference-ktx:1.1.1'
     kapt "androidx.room:room-compiler:$room_version"
+    implementation 'androidx.preference:preference-ktx:1.1.1'
+    implementation files('libs\\http-2.2.1.jar')
+    implementation files('libs\\sun-common-server.jar')
 
     
     //Material Design component
@@ -122,6 +127,9 @@ dependencies {
     //Dépendances pour tensorflow
     implementation 'org.tensorflow:tensorflow-lite:2.4.0'
     implementation 'org.tensorflow:tensorflow-lite-gpu:2.4.0'
+
+    //Dépendance tess pour l'OCR
+    implementation 'com.rmtheis:tess-two:9.0.0'
 
 
     testImplementation 'junit:junit:4.+'

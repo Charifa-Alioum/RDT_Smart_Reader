@@ -56,6 +56,13 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <TextView
+            android:id="@+id/recognise_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintTop_toBottomOf="@id/appbar_layout"/>
+
         <ImageView
             android:id="@+id/imageView_preview"
             android:layout_width="wrap_content"
@@ -104,7 +111,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_person_card"
-            app:layout_constraintTop_toBottomOf="@id/appbar_layout"/>
+            app:layout_constraintTop_toBottomOf="@id/recognise_text"
+            android:layout_marginTop="@dimen/fab_margin"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

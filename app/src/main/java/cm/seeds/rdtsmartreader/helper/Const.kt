@@ -13,7 +13,21 @@ const val REQUEST_CODE_CHOOSE_IMAGE = 6
 const val REQUEST_CODE_ACTIVITY_IMAGE_CAPTURE = 8
 
 
-const val MINIMUM_CONFIDENCE_TF_OD_API = 0.5f
+/**
+ * Différents types de questions lors de la création formulaire
+ */
+const val TYPE_QUESTION_SELECT_ONE = "Select Unique"
+const val TYPE_QUESTION_SELECT_MULTIPLE = "Select Multiple"
+const val TYPE_QUESTION_TEXT = "Texte"
+const val TYPE_QUESTION_DATE = "Date"
+const val TYPE_QUESTION_CHECKOX = "Checkbox"
+const val TYPE_QUESTION_RADIO = "Radio"
+const val TYPE_QUESTION_NUMBER_ENTIER = "Nombre Entier"
+const val TYPE_QUESTION_NUMBER_REEL = "Nombre Réel"
+const val TYPE_QUESTION_YES_OR_NO = "Oui / Non"
+
+
+const val MINIMUM_CONFIDENCE_TF_OD_API = 0.4f
 const val TF_OD_API_INPUT_SIZE = 640
 
 const val TF_OD_API_IS_QUANTIZED = false
@@ -55,10 +69,24 @@ const val RESULTATS_TEST_INDETERMINE = "Indéterminé"
 /**
  * Différentes conclusio d'in test
  */
-const val CONCLUSION_POSITIF = "Positif"
-const val CONCLUSION_NEGATIF = "Négatif"
-const val CONCLUSION_INDETERMINE = "Indéterminé"
-const val CONCLUSION_INVALIDE = "Invalide"
+const val CONCLUSION_POSITIF = "Test Positif"
+const val CONCLUSION_NEGATIF = "Test Négatif"
+const val CONCLUSION_INDETERMINE = "Test Indéterminé"
+const val CONCLUSION_INVALIDE = "Test Invalide"
+const val CONCLUSION_POSITIVE_AGENT_ONE = "Agent 1 positif"
+const val CONCLUSION_POSITIVE_BOTH_AGENT = "Tous les agents sont positifs"
+const val CONCLUSION_POSITIVE_AGENT_TWO = "Agent 2 positif"
+
+
+/**
+ * Différentes catégories
+ */
+const val CATEGORY_NEGATIVE = 0
+const val CATEGORY_POSITIVE = 1
+const val CATEGORY_INVALID = 2
+const val CATEGORY_POSTIVE_BOTH_AGENT = 3
+const val CATEGORY_POSTIVE_AGENT_ONE = 4
+const val CATEGORY_POSTIVE_AGENT_TWO = 5
 
 
 /**

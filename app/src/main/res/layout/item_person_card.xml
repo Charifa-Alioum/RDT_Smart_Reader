@@ -35,25 +35,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/quater_fab_margin"
-            android:text="@{user.userName}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/textview_age_patient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{user.userAge+`ans - `+user.userDomicile}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:visibility="visible"/>
 
         <TextView
             android:id="@+id/textview_test_resultat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{user.test.conclusion}"
             android:textColor="#F00"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textStyle="bold"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/textview_age_patient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textStyle="bold"/>
 
     </LinearLayout>

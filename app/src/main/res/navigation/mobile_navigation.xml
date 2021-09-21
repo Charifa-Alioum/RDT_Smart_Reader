@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="cm.seeds.rdtsmartreader.ui.main.settings.SettingsFragment"
+        android:name="cm.seeds.rdtsmartreader.ui.main.settings.UserProfilFragment"
         android:label="@string/parametres"
         tools:layout="@layout/fragment_settings" />
 
@@ -38,6 +38,13 @@
         android:name="cm.seeds.rdtsmartreader.ui.main.scan.ScanFragment"
         android:label="fragment_scan"
         tools:layout="@layout/fragment_scan" />
+
+
+    <fragment
+        android:id="@+id/userProfilFragment"
+        android:name="cm.seeds.rdtsmartreader.ui.main.user_profil.UserProfilFragment"
+        android:label="fragment_user_profil"
+        tools:layout="@layout/fragment_user_profil" />
 
 
 </navigation>

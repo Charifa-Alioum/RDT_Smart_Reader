@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@android:color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/fab_margin"
+            android:paddingEnd="@dimen/fab_margin"
+            android:paddingTop="@dimen/semi_fab_margin"
+            android:paddingBottom="@dimen/semi_fab_margin">
+
+            <TextView
+                android:id="@+id/form_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:text="Paludisme"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+            <TextView
+                android:id="@+id/form_pages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/form_name"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="10 pages"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"/>
+
+            <TextView
+                android:id="@+id/form_date_creation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/form_pages"
+                app:layout_constraintTop_toBottomOf="@id/warning_icon"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:text="Crée le 10 Dec 2021"
+                android:layout_gravity="end"
+                android:textSize="@dimen/user_profil_text_icon_explaniation_size"/>
+
+            <ImageView
+                android:id="@+id/warning_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_round_warning_24"
+                app:layout_constraintBottom_toTopOf="@id/form_date_creation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="#FFC107"
+                app:layout_constraintTop_toTopOf="@id/form_name"
+                android:layout_marginEnd="@dimen/semi_fab_margin"/>
+<!--
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="?android:attr/colorForeground"
+                android:alpha=".2"
+                app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

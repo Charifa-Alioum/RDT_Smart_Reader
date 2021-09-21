@@ -1,35 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.main.settings.SettingsFragment">
+        tools:context=".ui.main.settings.UserProfilFragment">
 
-        <TextView
-            android:id="@+id/text_notifications"
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/button_create_form"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:textColor="@color/color_accent"
-            android:text="Configurations Générales"
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:icon="@drawable/ic_round_add_24"
+            android:text="AJouter un formulaire"
+            android:layout_margin="@dimen/fab_margin" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/localisation_switch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/fab_margin"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            android:text="Trouver la position automatiquement"
-            android:textOn="Oui"
-            android:textOff="Non"/>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

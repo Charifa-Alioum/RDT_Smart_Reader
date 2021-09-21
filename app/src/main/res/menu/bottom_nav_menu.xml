@@ -12,8 +12,18 @@
         android:title="@string/informations" />
 
     <item
+        android:id="@+id/cameraFragment"
+        android:icon="@drawable/camera_menu_icon"
+        android:title="@string/Camera" />
+
+    <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/settings_menu_icon"
-        android:title="@string/parametres" />
+        android:title="@string/parametres"
+        android:visible="false"/>
+
+    <item android:id="@+id/userProfilFragment"
+        android:icon="@drawable/profil_menu_icon"
+        android:title="Mon Profil"/>
 
 </menu>

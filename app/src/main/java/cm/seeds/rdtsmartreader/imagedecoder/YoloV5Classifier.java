@@ -314,7 +314,7 @@ public class YoloV5Classifier implements Classifier {
         return nmsList;
     }
 
-    protected float mNmsThresh = 0.4f;
+    protected float mNmsThresh = 0.5f;
 
     protected float box_iou(RectF a, RectF b) {
         return box_intersection(a, b) / box_union(a, b);

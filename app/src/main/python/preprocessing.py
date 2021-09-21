@@ -1,6 +1,7 @@
 # our imports
 import numpy as np
 import cv2
+#import easyocr
 
 
 
@@ -62,7 +63,7 @@ def enhance_img(img, clip):
 # to resize image in order to conserve ratio
 def resize_image(image, width = None, height = None, inter = cv2.INTER_CUBIC):
     # initialize the dimensions of the image to be resized and
-    # grab the image sizeDecoder
+    # grab the image size
     dim = None
     (h, w) = image.shape[:2]
     print(h,w)
@@ -117,16 +118,41 @@ def preprocess(src):
     img = resize_image(img, 440, None)
 
     cropped = crop_tdr(img) # crop
+	
+	# Extract interesting part of images
+    h, w, c = cropped.shape
+    part1_j1 = 0
+    part1_j2 = int(0.25*h)
+    part1_i1 = 0
+    part1_i2 = w
+	
+    part2_j1 = int(0.3*h)
+    part2_j2 = int(0.6*h)
+    part2_i1 = w - int(0.4*w)
+    part2_i2 = w
+	
+    part1 = cropped[part1_j1:part1_j2, part1_i1:part1_i2]
+    part2 = cropped[part2_j1:part2_j2, part2_i1:part2_i2]
+    part2 = cv2.rotate(part2, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    height, width = part2.shape[:2]
+    part2 = cv2.resize(part2,(7*width, 7*height), interpolation = cv2.INTER_CUBIC)
+	
     cropped = resize_image(cropped, width, height) # resize
     cropped = enhance_img(cropped, clip=enhance_clip_value) # contrast enhancement
     cropped = cv2.cvtColor(cropped, cv2.COLOR_GRAY2RGB)
     cropped = padd_roi(cropped) # padding
 
     # get bytes to pass to java
-    is_success, cropped_buf_arr = cv2.imencode(".jpg", cropped)
-    result = cropped_buf_arr.tobytes()
+    is_success1, cropped_buf_arr = cv2.imencode(".jpg", cropped)
+    is_success2, part1_buf_arr = cv2.imencode(".jpg", part1)
+    is_success3, part2_buf_arr = cv2.imencode(".jpg", part2)
 	
-    return result
+    cropped_result = cropped_buf_arr.tobytes()
+    part1_result = part1_buf_arr.tobytes()
+    part2_result = part2_buf_arr.tobytes()
+	
+    return cropped_result, part1_result, part2_result
+	
 
 def main():
     a = 0

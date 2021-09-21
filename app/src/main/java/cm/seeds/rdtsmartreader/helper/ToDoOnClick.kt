@@ -1,7 +1,9 @@
 package cm.seeds.rdtsmartreader.helper
 
-interface ToDoOnClick {
+import android.view.View
 
-    fun onItemClick(item : Any, position : Int)
+fun interface ToDoOnClick {
+
+    fun onItemClick(item: Any, position: Int, view: View)
 
 }

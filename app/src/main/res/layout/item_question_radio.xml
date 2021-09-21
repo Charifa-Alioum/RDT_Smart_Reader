@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/semi_fab_margin"
+        android:layout_marginBottom="@dimen/semi_fab_margin">
+
+        <TextView
+            android:id="@+id/question_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/semi_fab_margin"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
+
+        <RadioGroup
+            android:id="@+id/radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/quater_fab_margin"
+            android:layout_margin="@dimen/semi_fab_margin"/>
+
+    </LinearLayout>
+</layout>

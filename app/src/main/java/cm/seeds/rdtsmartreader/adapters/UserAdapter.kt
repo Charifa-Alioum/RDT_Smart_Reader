@@ -2,7 +2,6 @@ package cm.seeds.rdtsmartreader.adapters
 
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -13,7 +12,6 @@ import androidx.viewbinding.ViewBinding
 import cm.seeds.rdtsmartreader.R
 import cm.seeds.rdtsmartreader.databinding.ItemPersonBinding
 import cm.seeds.rdtsmartreader.databinding.ItemPersonCardBinding
-import cm.seeds.rdtsmartreader.databinding.ItemPersonCardBindingImpl
 import cm.seeds.rdtsmartreader.helper.CONCLUSION_NEGATIF
 import cm.seeds.rdtsmartreader.helper.CONCLUSION_POSITIF
 import cm.seeds.rdtsmartreader.helper.ToDoOnClick
@@ -75,7 +73,7 @@ class UserAdapter(private val toDoOnClick: ToDoOnClick, @LayoutRes val layoutRes
                     dataBinding.synchedState.visibility = if(!user.synchronised) View.VISIBLE else View.GONE*/
 
                     dataBinding.root.setOnClickListener {
-                        toDoOnClick.onItemClick(user,position)
+                        toDoOnClick.onItemClick(user, position, it)
                     }
                 }
 

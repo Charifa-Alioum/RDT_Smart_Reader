@@ -7,7 +7,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import androidx.core.widget.CompoundButtonCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,11 +20,13 @@ import cm.seeds.rdtsmartreader.helper.ToDoOnClick
 import cm.seeds.rdtsmartreader.helper.showToast
 import cm.seeds.rdtsmartreader.modeles.Test
 import cm.seeds.rdtsmartreader.modeles.User
+import cm.seeds.rdtsmartreader.ui.MainViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SelectInformationBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var dataBinding : FragmentSelectInformationsBinding
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var informationsViewModel: InformationsViewModel
     private lateinit var test: Test
     private lateinit var allUsers : List<User>
@@ -54,6 +55,7 @@ class SelectInformationBottomSheet : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(requireActivity().application)).get(MainViewModel::class.java)
         informationsViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(requireActivity().application)).get(InformationsViewModel::class.java)
         val receiveTest = arguments?.getSerializable(TEST_TO_MATCH_WITH)
         if(receiveTest!=null){
@@ -115,12 +117,10 @@ class SelectInformationBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun attachObservers() {
-
-        informationsViewModel.allUsers.observe(viewLifecycleOwner,{
+        mainViewModel.allUsers.observe(viewLifecycleOwner,{
             allUsers = it
             applyFilter()
         })
-
     }
 
     private fun applyFilter() {
@@ -151,7 +151,7 @@ class SelectInformationBottomSheet : BottomSheetDialogFragment() {
     private fun setupList() {
 
         adapterPerson = UserAdapter(object : ToDoOnClick{
-            override fun onItemClick(item: Any, position: Int) {
+            override fun onItemClick(item: Any, position: Int, view: View) {
                 item as User
                 item.test?.apply {
                     conclusion = test.conclusion

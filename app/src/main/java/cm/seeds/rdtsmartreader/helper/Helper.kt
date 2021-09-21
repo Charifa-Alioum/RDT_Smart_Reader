@@ -9,6 +9,7 @@ import android.graphics.*
 import android.net.Uri
 import android.telephony.PhoneNumberUtils
 import android.text.TextUtils
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,22 @@ import kotlin.random.Random.Default.nextInt
  */
 fun showToast(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
+
+/**
+ * Methode utilitaire permettant d'afficher n'importe qu'elle vue
+ */
+fun View.show() {
+    this.visibility = View.VISIBLE
+}
+
+
+/**
+ * Methode utilitaire permettant de cacher n'importe qu'elle vue
+ */
+fun View.gone() {
+    this.visibility = View.GONE
 }
 
 
@@ -101,11 +118,10 @@ fun getDialogForPermissionDetails(context: Context, permission: String, show: Bo
 /**
  * Retourne la boite une boite de dialog présentant une interface d'attente
  */
-fun getLoadingDialog(context: Context): Dialog {
-    val dialog = Dialog(context)
-    dialog.setContentView(R.layout.loading_dialog_layout)
-    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-    return dialog
+fun getLoadingDialog(context: Context, cancelable : Boolean = false): Dialog {
+    return LoadingDialog(context).apply {
+        setCancelable(cancelable)
+    }
 }
 
 /**
@@ -180,7 +196,7 @@ fun loadImageInView(imageView: ImageView, imageReference: Any?, defaultResourceI
 /**
  * Transforme un long en une chaine de carractère
  */
-fun parseDateToString(date: Long?, format: String): String {
+fun formatDate(date: Long?, format: String): String {
     return try {
         SimpleDateFormat(format).format(date)
     } catch (parseException: ParseException) {

@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<layout>
 
-    <ProgressBar
-        android:layout_width="24dp"
-        android:layout_height="24dp"/>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/semi_fab_margin"
+        android:animateLayoutChanges="true">
 
-</FrameLayout>
+        <View
+            android:id="@+id/dot1"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="@color/color_accent"
+            android:layout_margin="@dimen/quater_fab_margin"/>
+
+        <View
+            android:id="@+id/dot2"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="@color/color_accent"
+            android:layout_margin="@dimen/quater_fab_margin"
+            android:visibility="invisible"/>
+
+        <View
+            android:id="@+id/dot3"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="@color/color_accent"
+            android:layout_margin="@dimen/quater_fab_margin"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+</layout>

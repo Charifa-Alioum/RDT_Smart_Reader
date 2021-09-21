@@ -7,4 +7,5 @@
     <dimen name="quater_fab_margin">4dp</dimen>
     <dimen name="dialog_min_width">350dp</dimen>
     <dimen name="image_size_item_person_card">120dp</dimen>
+    <dimen name="user_profil_text_icon_explaniation_size">10sp</dimen>
 </resources>

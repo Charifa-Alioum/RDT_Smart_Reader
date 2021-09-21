@@ -3,12 +3,12 @@ package cm.seeds.rdtsmartreader.ui.main.capture
 import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.IBinder
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -22,12 +22,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import cm.seeds.rdtsmartreader.R
-import cm.seeds.rdtsmartreader.adapters.UserAdapter
+import cm.seeds.rdtsmartreader.adapters.ImageAdapter
 import cm.seeds.rdtsmartreader.data.ViewModelFactory
 import cm.seeds.rdtsmartreader.databinding.FragmentCameraBinding
 import cm.seeds.rdtsmartreader.helper.*
+import cm.seeds.rdtsmartreader.modeles.Image
 import cm.seeds.rdtsmartreader.modeles.Test
-import cm.seeds.rdtsmartreader.modeles.User
+import cm.seeds.rdtsmartreader.service.Server
 import cm.seeds.rdtsmartreader.ui.camera.CameraActivity
 import cm.seeds.rdtsmartreader.ui.main.informations.AddInformationsBottomSheetFragment
 import cm.seeds.rdtsmartreader.ui.main.informations.InformationsViewModel
@@ -36,6 +37,7 @@ import cm.seeds.retrofitrequestandnavigation.retrofit.Status
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import java.io.IOException
+import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,18 +49,17 @@ class CameraFragment : Fragment() {
      * Offrir une possibilité dans les paramètres permettant la connection au dispositif
      */
 
-    private lateinit var viewModel : CameraViewModel
     private lateinit var dataBinding : FragmentCameraBinding
     private lateinit var informationsViewModel: InformationsViewModel
+    private lateinit var cameraViewModel: CameraViewModel
     private lateinit var loadingDialog : Dialog
     private var currentPhotoPath : String? = null
-    private lateinit var adapterUserWithImage : UserAdapter
+    private lateinit var adapterImage : ImageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider(this, ViewModelFactory(application = requireActivity().application)).get(CameraViewModel::class.java)
         informationsViewModel = ViewModelProvider(requireActivity(),ViewModelFactory(requireActivity().application)).get(InformationsViewModel::class.java)
+        cameraViewModel = ViewModelProvider(this,ViewModelFactory(requireActivity().application)).get(CameraViewModel::class.java)
 
     }
 
@@ -80,23 +81,23 @@ class CameraFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         when{
+
             requestCode == REQUEST_CODE_CAPTURE_IMAGE && resultCode == RESULT_OK ->{
-                viewModel.liveDataImagePath.value = currentPhotoPath
+                cameraViewModel.liveDataImagePath.value = currentPhotoPath
             }
 
             requestCode == REQUEST_CODE_CHOOSE_IMAGE && resultCode == RESULT_OK ->{
                 val imageUri = data?.data
                 imageUri?.let {
-                    viewModel.liveDataImagePath.value = imageUri
+                    cameraViewModel.liveDataImagePath.value = imageUri
                 }
             }
 
             requestCode == REQUEST_CODE_ACTIVITY_IMAGE_CAPTURE && resultCode == RESULT_OK -> {
                 val imagePath = data?.getStringExtra(Intent.EXTRA_TEXT)
                 imagePath?.let {
-                    viewModel.liveDataImagePath.value = imagePath
+                    cameraViewModel.liveDataImagePath.value = imagePath
                 }
             }
 
@@ -106,7 +107,7 @@ class CameraFragment : Fragment() {
 
     private fun processImage() {
 
-        val imageLink = viewModel.liveDataImagePath.value
+        val imageLink = cameraViewModel.liveDataImagePath.value
         var imagePath = ""
         when (imageLink) {
             is String -> imagePath = imageLink
@@ -120,7 +121,7 @@ class CameraFragment : Fragment() {
         }
 
         if(imagePath.isNotEmpty()){
-            viewModel.scanAndHandleResult(imagePath)
+            cameraViewModel.scanAndHandleResult(imagePath)
         }
 
 
@@ -153,24 +154,59 @@ class CameraFragment : Fragment() {
 
     private fun setupList() {
 
-        adapterUserWithImage = UserAdapter(object : ToDoOnClick{
-            override fun onItemClick(item: Any, position: Int) {
-                item as User
-                dataBinding.recyclerviewListPerson.visibility = GONE
-                viewModel.liveDataImagePath.value = item.test?.imageUri
+        adapterImage = ImageAdapter { item, position, view ->
+            val image = item as Image
+            val toDoOnClick = DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+                when(which){
+
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        val testToSave = Test(conclusion = image.result, imageUri = image.filePath)
+                        val bottomSheet = SelectInformationBottomSheet.getNewInstance(testToSave)
+                        bottomSheet.show(childFragmentManager,SelectInformationBottomSheet.TAG)
+                    }
+
+                    DialogInterface.BUTTON_NEGATIVE ->{
+                        val bottomSheet = AddInformationsBottomSheetFragment()
+                        bottomSheet.show(childFragmentManager,AddInformationsBottomSheetFragment.TAG)
+                    }
+
+                    DialogInterface.BUTTON_NEUTRAL ->{
+
+                    }
+                }
+
+                cameraViewModel.liveDataImagePath.value = ""
             }
-        },R.layout.item_person_card)
+            MaterialAlertDialogBuilder(requireContext())
+                .setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.dialog_background))
+                .setMessage("Que voulez vous faire de cette image?")
+                .setTitle(image.name)
+                .setPositiveButton("Associer à un patient",toDoOnClick)
+                .setNeutralButton("Fermer",toDoOnClick)
+                .setNegativeButton("Créer un Patient",toDoOnClick)
+                .show()
+        }
 
         dataBinding.recyclerviewListPerson.apply {
             layoutManager = GridLayoutManager(requireContext(), numberOfItemInLine(requireActivity(),R.dimen.image_size_item_person_card))
-            adapter = adapterUserWithImage
+            adapter = adapterImage
         }
+
+        cameraViewModel.recogniseText.observe(viewLifecycleOwner,{ texts ->
+
+            val builder = StringBuilder()
+            texts?.forEach { text ->
+                builder.append(text).append("\n\n\n")
+            }
+            dataBinding.recogniseText.text = builder.toString()
+        })
 
     }
 
     private fun attachObservers() {
 
-        viewModel.liveDataImagePath.observe(viewLifecycleOwner,{
+        cameraViewModel.liveDataImagePath.observe(viewLifecycleOwner,{
             dataBinding.buttonAnalyseImage.visibility = VISIBLE
             dataBinding.recyclerviewListPerson.visibility = GONE
             when{
@@ -191,13 +227,12 @@ class CameraFragment : Fragment() {
 
         })
 
-        informationsViewModel.allUsers.observe(viewLifecycleOwner,{
-            val usersToShows = it.filter { user -> user.test?.imageUri?.isNotEmpty() == true }
-            adapterUserWithImage.submitList(usersToShows)
+        cameraViewModel.saveImages.observe(viewLifecycleOwner,{
+            adapterImage.submitList(it)
             //adapterUserWithImage.notifyDataSetChanged()
         })
 
-        viewModel.resultOfScan.observe(viewLifecycleOwner,{
+        cameraViewModel.resultOfScan.observe(viewLifecycleOwner,{
 
             when (it.status){
 
@@ -207,7 +242,6 @@ class CameraFragment : Fragment() {
                     }
 
                     when (it.data){
-
                         is Bitmap ->{
                             dataBinding.imageViewPreview.setImageBitmap(it.data)
                         }
@@ -215,7 +249,6 @@ class CameraFragment : Fragment() {
                         is String ->{
                             loadImageInView(dataBinding.imageViewPreview,it.data)
                         }
-
                     }
                 }
 
@@ -233,7 +266,7 @@ class CameraFragment : Fragment() {
                         when(which){
 
                             DialogInterface.BUTTON_POSITIVE -> {
-                                val testToSave = Test(conclusion = it.data.toString(), imageUri = viewModel.liveDataImagePath.value.toString())
+                                val testToSave = Test(conclusion = it.data.toString(), imageUri = cameraViewModel.liveDataImagePath.value.toString())
                                 val bottomSheet = SelectInformationBottomSheet.getNewInstance(testToSave)
                                 bottomSheet.show(childFragmentManager,SelectInformationBottomSheet.TAG)
                             }
@@ -248,12 +281,12 @@ class CameraFragment : Fragment() {
                             }
                         }
 
-                        viewModel.liveDataImagePath.value = ""
+                        cameraViewModel.liveDataImagePath.value = ""
                     }
 
                     MaterialAlertDialogBuilder(requireContext())
                             .setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.dialog_background))
-                            .setMessage("Ce test est ${it.data.toString()}")
+                            .setMessage("${it.data.toString()}")
                             .setTitle("Resultats du Scan")
                             .setPositiveButton("Associer à un patient",toDoOnClick)
                             .setNeutralButton("Fermer",toDoOnClick)
@@ -399,7 +432,6 @@ class CameraFragment : Fragment() {
 
                         else -> dialog.dismiss()
                     }
-
                 }
 
                 MaterialAlertDialogBuilder(requireContext())
