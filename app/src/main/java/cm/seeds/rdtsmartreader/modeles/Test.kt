@@ -1,12 +1,14 @@
 package cm.seeds.rdtsmartreader.modeles
 
 import android.util.Log
+import androidx.room.Entity
 import cm.seeds.rdtsmartreader.helper.*
 import cm.seeds.rdtsmartreader.imagedecoder.Classifier
 import java.io.Serializable
 import kotlin.math.abs
 import kotlin.math.min
 
+@Entity
 data class Test(
 
         var dateTest : Long = System.currentTimeMillis(),

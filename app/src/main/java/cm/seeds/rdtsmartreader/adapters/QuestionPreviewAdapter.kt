@@ -96,7 +96,7 @@ class QuestionPreviewAdapter(private val fragmentManager: FragmentManager) : Lis
                                     return 0
                                 }
 
-                                override fun writeToParcel(dest: Parcel?, flags: Int) {
+                                override fun writeToParcel(p0: Parcel, flags: Int) {
 
                                 }
 

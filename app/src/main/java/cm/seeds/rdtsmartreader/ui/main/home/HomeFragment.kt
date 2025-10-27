@@ -80,6 +80,8 @@ class HomeFragment : Fragment() {
                     ServerListener.State.STOPPED -> {
                         dataBinding.stateConnexionDispositif.text = "Non connecté au dispositif"
                     }
+
+                    ServerListener.State.CONNECTING -> TODO()
                 }
             }else{
                 dataBinding.stateConnexionDispositif.text = "Non connecté au dispositif"

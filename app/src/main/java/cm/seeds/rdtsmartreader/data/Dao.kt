@@ -21,13 +21,13 @@ interface Dao {
      * Sauvegarde un utilisateur dans la BD
      */
     @Insert (onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveUser(users : List<User>)
+    fun saveUser(users : List<User>)
 
     /**
      * Supprime un utilisateur
      */
     @Delete
-    suspend fun deleteUser(users : List<User>)
+    fun deleteUser(users : List<User>)
 
     /**
      * Retourne la liste des différents utilisateur de présent dans la BD
@@ -81,14 +81,14 @@ interface Dao {
      * Méthode perméttant d'enregistrer un formulateur dans le BD
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveForms(forms : List<Form>)
+    fun saveForms(forms : List<Form>)
 
 
     /**
      * Méthode d'enregistreemnt des images prises
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveImages(images: List<Image>)
+    fun saveImages(images: List<Image>)
 
 
     /**

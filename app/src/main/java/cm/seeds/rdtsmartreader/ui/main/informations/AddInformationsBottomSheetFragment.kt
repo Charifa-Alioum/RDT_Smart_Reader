@@ -845,7 +845,7 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
                                     return 0
                                 }
 
-                                override fun writeToParcel(dest: Parcel?, flags: Int) {
+                                override fun writeToParcel(p0: Parcel, flags: Int) {
 
                                 }
                             })
@@ -874,7 +874,7 @@ class AddInformationsBottomSheetFragment : BottomSheetDialogFragment() {
                                     return 0
                                 }
 
-                                override fun writeToParcel(dest: Parcel?, flags: Int) {
+                                override fun writeToParcel(p0: Parcel, flags: Int) {
 
                                 }
                             })

@@ -13,7 +13,7 @@ import cm.seeds.rdtsmartreader.ui.main.user_profil.UserProfilViewModel
 
 class ViewModelFactory(val application: Application) : ViewModelProvider.Factory{
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         return when{
 
