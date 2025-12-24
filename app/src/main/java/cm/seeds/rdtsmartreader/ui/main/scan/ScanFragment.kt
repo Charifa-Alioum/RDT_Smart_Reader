@@ -28,7 +28,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 class ScanFragment : Fragment(),  ZXingScannerView.ResultHandler {
 
     private lateinit var dataBinding : FragmentScanBinding
-    private lateinit var viewModel : ScanViewModel
+    private lateinit var viewModel : ScanVieModel
     private lateinit var scannerView : ZXingScannerView
     private var isFlashOn = false
 

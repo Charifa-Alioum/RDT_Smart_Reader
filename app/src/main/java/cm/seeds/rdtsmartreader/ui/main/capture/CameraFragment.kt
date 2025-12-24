@@ -87,8 +87,9 @@ class CameraFragment : Fragment() {
                 cameraViewModel.liveDataImagePath.value = currentPhotoPath
             }
 
+            //l'image e
             requestCode == REQUEST_CODE_CHOOSE_IMAGE && resultCode == RESULT_OK ->{
-                val imageUri = data?.data
+                val imageUri = data!!.data
                 imageUri?.let {
                     cameraViewModel.liveDataImagePath.value = imageUri
                 }

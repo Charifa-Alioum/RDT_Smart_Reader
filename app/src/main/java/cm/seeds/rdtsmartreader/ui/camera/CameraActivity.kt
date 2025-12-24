@@ -7,6 +7,7 @@ import android.content.res.Configuration
 import android.graphics.*
 import android.hardware.camera2.*
 import android.media.ImageReader
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -15,6 +16,7 @@ import android.util.Size
 import android.util.SparseIntArray
 import android.view.Surface
 import android.view.TextureView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
@@ -383,6 +385,7 @@ class CameraActivity : AppCompatActivity() {
     /**
      * Creates a new [CameraCaptureSession] for camera preview.
      */
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun createCameraPreviewSession() {
         try {
             val texture = databinding.textureView.surfaceTexture
@@ -401,6 +404,7 @@ class CameraActivity : AppCompatActivity() {
 
             // Here, we create a CameraCaptureSession for camera preview.
             cameraDevice?.createCaptureSession(listOf(surface, imageReader?.surface),
+                    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
                     object : CameraCaptureSession.StateCallback() {
 
                         override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
