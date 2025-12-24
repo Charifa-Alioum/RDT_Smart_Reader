@@ -1,11 +1,5 @@
 # RDT\_Smart\_Reader
 
-
-
-\# Documentation Complète - RDT Smart Reader
-
-
-
 \## Table des Matières
 
 1\. \[Présentation du Projet](#présentation-du-projet)
@@ -27,20 +21,11 @@
 9\. \[Annexes](#annexes)
 
 
-
----
-
-
-
 \## Présentation du Projet
-
-
 
 \### Objectif
 
 RDT Smart Reader est une application mobile pour diagnostiquer le paludisme en analysant des images de tests de diagnostic rapide (TDR) avec l'IA.
-
-
 
 \### Fonctionnalités Principales
 
@@ -55,7 +40,6 @@ RDT Smart Reader est une application mobile pour diagnostiquer le paludisme en a
 \- Synchronisation avec serveur DHIS2
 
 
-
 \### Public Cible
 
 \- Professionnels de santé
@@ -67,14 +51,7 @@ RDT Smart Reader est une application mobile pour diagnostiquer le paludisme en a
 \- Organismes de santé publique
 
 
-
----
-
-
-
 \## Architecture Technique
-
-
 
 \### Stack Technique
 
@@ -125,14 +102,7 @@ app/
 ```
 
 
-
----
-
-
-
 \## Guide d'Installation
-
-
 
 \### Prérequis
 
@@ -143,7 +113,6 @@ app/
 \- SDK Android 31+
 
 \- Appareil Android 6.0+ ou émulateur
-
 
 
 \### Étapes d'Installation
@@ -159,111 +128,59 @@ app/
 5\. Exécuter sur appareil/émulateur
 
 
-
----
-
-
-
 \## Manuel d'Utilisation
 
-
-
 1\. \*\*Capture d'Image\*\*
-
-&nbsp;  - Lancer l'application
-
-&nbsp;  - Appuyer sur "Nouveau Test"
-
-&nbsp;  - Prendre une photo du test TDR
-
-&nbsp;  - Valider la capture
-
-
+  - Lancer l'application
+  - Appuyer sur "Nouveau Test"
+  - Prendre une photo du test TDR
+  - Valider la capture
 
 2\. \*\*Analyse du Test\*\*
-
-&nbsp;  - Traitement automatique
-
-&nbsp;  - Identification des zones d'intérêt
-
-&nbsp;  - Affichage du résultat
-
-
+  - Traitement automatique
+  - Identification des zones d'intérêt
+  - Affichage du résultat
 
 3\. \*\*Gestion des Résultats\*\*
-
-&nbsp;  - Historique des tests
-
-&nbsp;  - Export des résultats
-
-&nbsp;  - Synchronisation serveur
-
-
-
----
-
+  - Historique des tests
+  - Export des résultats
+  - Synchronisation serveur
 
 
 \## Développement
 
-
-
 \### Structure du Code
-
-
 
 \#### PythonMod.kt
 
 ```kotlin
 
 class PythonMod private constructor(application: Application) {
+   init {
+       if (!Python.isStarted()) {
+           Python.start(AndroidPlatform(application))
+       }
+       preprocessingMod = Python.getInstance().getModule("preprocessing")
+   }
 
-&nbsp;   init {
-
-&nbsp;       if (!Python.isStarted()) {
-
-&nbsp;           Python.start(AndroidPlatform(application))
-
-&nbsp;       }
-
-&nbsp;       preprocessingMod = Python.getInstance().getModule("preprocessing")
-
-&nbsp;   }
-
-&nbsp;   
-
-&nbsp;   suspend fun preproccessImage(imagePath: String): List<Bitmap?> {
-
-&nbsp;       // Implémentation...
-
-&nbsp;   }
-
+   suspend fun preproccessImage(imagePath: String): List<Bitmap?> {
+       // Implémentation...
+   }
 }
-
-```
-
-
 
 \#### ScanFragment.kt
 
 ```kotlin
 
 class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
+   private fun checkCameraPermission() { /\* ... \*/ }
 
-&nbsp;   private fun checkCameraPermission() { /\* ... \*/ }
+   override fun handleResult(result: Result?) {
 
-&nbsp;   
+       // Traitement du résultat
 
-&nbsp;   override fun handleResult(result: Result?) {
-
-&nbsp;       // Traitement du résultat
-
-&nbsp;   }
-
+   }
 }
-
-```
-
 
 
 \### Tests
@@ -274,65 +191,29 @@ class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
 
 class PythonModTest {
 
-&nbsp;   @Test
-
-&nbsp;   fun testImageProcessing() { /\* ... \*/ }
+   @Test
+   fun testImageProcessing() { /\* ... \*/ }
 
 }
 
-```
-
-
-
----
-
-
-
-\## Dépannage
-
-
-
 \### Problèmes Courants
 
-
-
 1\. \*\*Échec de Capture\*\*
-
-&nbsp;  - Vérifier les permissions caméra
-
-&nbsp;  - Redémarrer l'application
-
-&nbsp;  - Vérifier l'utilisation de la caméra par d'autres apps
-
-
+  - Vérifier les permissions caméra
+  - Redémarrer l'application
+  - Vérifier l'utilisation de la caméra par d'autres apps
 
 2\. \*\*Erreur de Traitement\*\*
-
-&nbsp;  - Vérifier la qualité de l'image
-
-&nbsp;  - S'assurer d'un bon éclairage
-
-&nbsp;  - Redémarrer l'application
-
-
+  - Vérifier la qualité de l'image
+  - S'assurer d'un bon éclairage
+  - Redémarrer l'application
 
 3\. \*\*Synchronisation\*\*
-
-&nbsp;  - Vérifier la connexion Internet
-
-&nbsp;  - Vérifier les identifiants API
-
-&nbsp;  - Vérifier le statut du serveur
-
-
-
----
-
-
+  - Vérifier la connexion Internet
+  - Vérifier les identifiants API
+  - Vérifier le statut du serveur
 
 \## Sécurité
-
-
 
 \### Mesures Implémentées
 
@@ -360,23 +241,6 @@ class PythonModTest {
 
 
 
----
-
-
-
-\## Maintenance
-
-
-
-\### Mises à Jour
-
-1\. Vérifier les mises à jour de sécurité
-
-2\. Tester sur nouvelles versions d'Android
-
-3\. Mettre à jour les dépendances
-
-
 
 \### Journalisation
 
@@ -399,15 +263,6 @@ Log.d(TAG, "Message de débogage")
 \- Synchronisation cloud
 
 
-
----
-
-
-
-\## Annexes
-
-
-
 \### Codes d'Erreur
 
 | Code | Description | Solution |
@@ -419,40 +274,6 @@ Log.d(TAG, "Message de débogage")
 | 404  | Non trouvé | Vérifier URL |
 
 | 500  | Erreur serveur | Contacter admin |
-
-
-
-\### Glossaire
-
-\- \*\*TDR\*\* : Test de Diagnostic Rapide
-
-\- \*\*IA\*\* : Intelligence Artificielle
-
-\- \*\*API\*\* : Interface de Programmation
-
-\- \*\*DHIS2\*\* : Plateforme sanitaire
-
-
-
-\### Support
-
-\- Email : support@rdtreader.org
-
-\- Tél : +XXX XX XXX XX XX
-
-\- Site : https://rdtreader.org/support
-
-
-
-\### Licence
-
-\[MIT](LICENSE)
-
-
-
----
-
-\*Dernière mise à jour : 12/12/2025\*
 
 
 
